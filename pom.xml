@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>es.atlastrip</groupId>
 	<artifactId>BlogDeViajes</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>BlogDeViajes</name>
 	<description>Blog de viajes</description>
 	<properties>
