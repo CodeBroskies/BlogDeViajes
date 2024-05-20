@@ -1,4 +1,72 @@
 package es.atlastrip.BlogDeViajes.services;
 
+import es.atlastrip.BlogDeViajes.ConnectionMySql;
+import es.atlastrip.BlogDeViajes.models.Post;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 public class PostService {
+
+    ConnectionMySql MYSQL = new ConnectionMySql();
+
+    public ArrayList<Post> listarPosts() throws SQLException {
+        ArrayList<Post> posts = new ArrayList<>();
+        String sql = "SELECT * FROM post";
+        Statement consulta = MYSQL.connect().createStatement();
+        ResultSet resultSet = consulta.executeQuery(sql);
+        while (resultSet.next()) {
+            Post post = new Post(
+                    resultSet.getInt("id"),
+                    resultSet.getString("titulo"),
+                    resultSet.getInt("id_cliente")
+            );
+            posts.add(post);
+        }
+        return posts;
+    }
+
+    public void crearPost(Post post) throws SQLException {
+        Statement consulta = MYSQL.connect().createStatement();
+
+        String sql = "INSERT INTO post(nombre, apellido, telefono, email, edad) VALUES ('"
+                + post.getId() + "','" + post.getTitulo() + "','" + post.getId_cliente()  + "');";
+
+        consulta.executeUpdate(sql);
+        consulta.close();
+    }
+
+    public void eliminarPost(int id) throws SQLException {
+        Statement consulta = MYSQL.connect().createStatement();
+
+        String sql = "DELETE FROM post WHERE id = " + id;
+        consulta.executeUpdate(sql);
+        consulta.close();
+    }
+
+    public void actualizarPost(Post postSeleccionado) throws SQLException {
+        Statement consulta = MYSQL.connect().createStatement();
+        String sql = "UPDATE post SET id = '" + postSeleccionado.getId() + "', titulo = '"  + "' WHERE id = " + postSeleccionado.getId();
+
+        consulta.executeUpdate(sql);
+        consulta.close();
+    }
+
+    public Post obtenerPost(int id) throws SQLException {
+        String sql = "SELECT * FROM post WHERE id = " + id;
+        Statement consulta = MYSQL.connect().createStatement();
+        ResultSet resultSet = consulta.executeQuery(sql);
+        if (resultSet.next()) {
+            Post post = new Post(
+                    resultSet.getInt("id"),
+                    resultSet.getString("titulo"),
+                    resultSet.getInt("id_cliente")
+            );
+            return post;
+        }
+        return null;
+    }
+
 }
