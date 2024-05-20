@@ -9,11 +9,15 @@ public class Comentario {
     private int id_cliente;
     private int id_seccion;
 
-    public Comentario(String comentario, Date fecha_comentario, int id_seccion, int id_cliente) {
+    public Comentario(int id, String comentario, Date fecha_comentario, int id_seccion, int id_cliente) {
+        this.id = id;
         this.comentario = comentario;
         this.fecha_comentario = fecha_comentario;
         this.id_seccion = id_seccion;
-        this.id_cliente = id_cliente;
+    }
+
+    public Comentario() {
+
     }
 
     public int getId() {
