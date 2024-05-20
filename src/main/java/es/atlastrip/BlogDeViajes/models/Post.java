@@ -5,9 +5,14 @@ public class Post {
     private String titulo;
     private int id_cliente;
 
-    public Post(String titulo, int id_cliente) {
+    public Post(int id, String titulo, int id_cliente) {
+        this.id = id;
         this.titulo = titulo;
         this.id_cliente = id_cliente;
+    }
+
+    public Post() {
+
     }
 
     public String getTitulo() {

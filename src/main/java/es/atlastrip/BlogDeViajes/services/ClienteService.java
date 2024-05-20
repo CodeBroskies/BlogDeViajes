@@ -33,7 +33,6 @@ public class ClienteService {
             return clientes;
         }
 
-
         public void crearCliente(Cliente cliente) throws SQLException {
             Statement consulta = MYSQL.connect().createStatement();
 

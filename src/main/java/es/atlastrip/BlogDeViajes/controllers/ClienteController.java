@@ -21,11 +21,9 @@ public class ClienteController {
         public String listar(@RequestParam Model model) throws SQLException {
             String busqueda = "";
             ArrayList<Cliente> clientes = service.listarClientes();
-            int paginas = ((clientes.size()%5) == 0) ? clientes.size()/5 : (clientes.size() < 5) ? 1 : (clientes.size()/5 + 1);
             model.addAttribute("clientes", service.listarClientes());
             model.addAttribute("cliente", new Cliente());
             model.addAttribute("busqueda", busqueda);
-            model.addAttribute("paginas", paginas);
             return "clientes";
         }
 
