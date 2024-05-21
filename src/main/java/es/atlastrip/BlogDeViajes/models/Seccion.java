@@ -5,9 +5,14 @@ public class Seccion {
     private String titulo;
     private int id_post;
 
-    public Seccion(String titulo, int id_post) {
+    public Seccion(int id, String titulo, int id_post) {
+        this.id = id;
         this.titulo = titulo;
         this.id_post = id_post;
+    }
+
+    public Seccion() {
+
     }
 
     public int getId() {
