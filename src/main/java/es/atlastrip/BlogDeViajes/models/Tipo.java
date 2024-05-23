@@ -6,8 +6,11 @@ public class Tipo {
     private String texto;
     private String urlImagen;
 
-    public Tipo(String nombre) {
+    public Tipo() {
         this.nombre = nombre;
+    }
+
+    public Tipo(int id, String nombre, String texto, String urlImagen) {
     }
 
     public int getId() {
