@@ -9,13 +9,17 @@ public class Cliente {
     private String email;
     private String telefono;
 
-    public Cliente(String nick, String nombre, String apellido1, String apellido2, String email, String telefono) {
+    public Cliente(int id, String nick, String nombre, String apellido1, String apellido2, String email, String telefono) {
+        this.id = id;
         this.nick = nick;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.email = email;
         this.telefono = telefono;
+    }
+
+    public Cliente() {
     }
 
     public String getNick() {
@@ -73,4 +77,5 @@ public class Cliente {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
 }
