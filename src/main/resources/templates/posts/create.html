@@ -1,23 +1,7 @@
-
-    <div class="p-4">
-        <div class="card">
-            <div class="card-header">
-                Crear publicación
-            </div>
-            <div class="card-body">
-                <div class="d-flex align-items-center mb-2">
-                    <Avatar image="https://github.com/michillas.png" class="avatar me-2" size="normal" shape="circle" />
-                    @Usuario
-                </div>
-                <form>
-                    <SectionPost v-for="n in numeroSecciones" v-bind:key="n" :seccionNumero="n"></SectionPost>
-                    <a href="#" @click.prevent="agregarSeccion" class="btn btn-primary mt-3">
-                        <i class="pi pi-plus me-2"></i>Crear nueva sección
-                    </a>
-                </form>
-            </div>
-        </div>
-        <a href="#" class="btn btn-primary mt-3">
-            <i class=" center-align pi pi-send me-2"></i>Publicar Post
-        </a>
+<div class="d-flex flex-row mt-3">
+    <div class="col p-0 w"></div>
+    <div class="col my-3 p-0 d-flex justify-content-center">
+        <button class="btn btn-primary px-3 py-2 fs-5"><i class="bi bi-plus"></i>Crear publicación</button>
     </div>
+    <div class="col p-0"></div>
+</div>
