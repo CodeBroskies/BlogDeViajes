@@ -22,6 +22,8 @@ public class ClienteService {
                 Cliente cliente = new Cliente(
                         resultSet.getInt("id"),
                         resultSet.getString("nick"),
+                        resultSet.getString("password"),
+                        resultSet.getString("avatar"),
                         resultSet.getString("nombre"),
                         resultSet.getString("apellido1"),
                         resultSet.getString("apellido2"),
@@ -67,6 +69,8 @@ public class ClienteService {
                 Cliente cliente = new Cliente(
                         resultSet.getInt("id"),
                         resultSet.getString("nick"),
+                        resultSet.getString("password"),
+                        resultSet.getString("avatar"),
                         resultSet.getString("nombre"),
                         resultSet.getString("apellido1"),
                         resultSet.getString("apellido2"),
