@@ -3,7 +3,6 @@ package es.atlastrip.BlogDeViajes.services;
 import es.atlastrip.BlogDeViajes.ConnectionMySql;
 import es.atlastrip.BlogDeViajes.models.Comentario;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;

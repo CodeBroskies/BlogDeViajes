@@ -3,12 +3,12 @@ package es.atlastrip.BlogDeViajes.services;
 import es.atlastrip.BlogDeViajes.ConnectionMySql;
 import es.atlastrip.BlogDeViajes.models.Cliente;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
+
 public class ClienteService {
 
         ConnectionMySql MYSQL = new ConnectionMySql();
@@ -22,6 +22,8 @@ public class ClienteService {
                 Cliente cliente = new Cliente(
                         resultSet.getInt("id"),
                         resultSet.getString("nick"),
+                        resultSet.getString("password"),
+                        resultSet.getString("avatar"),
                         resultSet.getString("nombre"),
                         resultSet.getString("apellido1"),
                         resultSet.getString("apellido2"),
@@ -67,6 +69,8 @@ public class ClienteService {
                 Cliente cliente = new Cliente(
                         resultSet.getInt("id"),
                         resultSet.getString("nick"),
+                        resultSet.getString("password"),
+                        resultSet.getString("avatar"),
                         resultSet.getString("nombre"),
                         resultSet.getString("apellido1"),
                         resultSet.getString("apellido2"),
