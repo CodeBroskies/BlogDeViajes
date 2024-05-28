@@ -19,4 +19,10 @@ public class WebController {
     public String crearpost() {
         return "createpost";
     }
+
+    @GetMapping("/verpost")
+    public String verpost() {
+        return "post";
+    }
+
 }
