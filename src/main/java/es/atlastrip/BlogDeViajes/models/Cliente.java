@@ -1,6 +1,13 @@
 package es.atlastrip.BlogDeViajes.models;
 
-public class Cliente {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.sql.Date;
+import java.util.Collection;
+import java.util.List;
+
+public class Cliente implements UserDetails {
     private int id;
     private String nick;
     private String password;
@@ -10,6 +17,9 @@ public class Cliente {
     private String apellido2;
     private String email;
     private String telefono;
+    private boolean accountNonLocked;
+    private int failedAttempt;
+    private Date lockTime;
 
     public Cliente(int id, String nick, String password, String avatar, String nombre, String apellido1, String apellido2, String email, String telefono) {
         this.id = id;
@@ -40,8 +50,38 @@ public class Cliente {
         this.nick = nick;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.nick;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {

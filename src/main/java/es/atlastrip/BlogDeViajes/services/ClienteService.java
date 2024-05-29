@@ -9,7 +9,19 @@ import java.sql.ResultSet;
 
 import java.util.ArrayList;
 
-public class ClienteService {
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ClienteService implements UserDetailsService {
+
+        public PasswordEncoder passwordEncoder() {
+            return new BCryptPasswordEncoder();
+        }
 
         ConnectionMySql MYSQL = new ConnectionMySql();
 
@@ -38,8 +50,10 @@ public class ClienteService {
         public void crearCliente(Cliente cliente) throws SQLException {
             Statement consulta = MYSQL.connect().createStatement();
 
-            String sql = "INSERT INTO cliente(nombre, apellido, telefono, email, edad) VALUES ('"
-                    + cliente.getNombre() + "','" + cliente.getApellido1() + "','" + cliente.getApellido2() + "','"+ cliente.getTelefono() + "','" + cliente.getEmail() + "');";
+            cliente.setPassword(passwordEncoder().encode(cliente.getPassword()));
+
+            String sql = "INSERT INTO cliente(nick, password, avatar, nombre, apellido1, apellido2, email, telefono) VALUES ('"
+                    + cliente.getNick() + "', '" + cliente.getPassword() + "', '" + cliente.getAvatar() + "', '" + cliente.getNombre() + "', '" + cliente.getApellido1() + "', '" + cliente.getApellido2() + "', '" + cliente.getEmail() + "', '" + cliente.getTelefono() + "');";
 
             consulta.executeUpdate(sql);
             consulta.close();
@@ -82,5 +96,29 @@ public class ClienteService {
             return null;
         }
 
-
+        @Override
+        public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+            String sql = "SELECT * FROM cliente WHERE nick = '" + username +"'";
+            try {
+                Statement consulta = MYSQL.connect().createStatement();
+                ResultSet resultSet = consulta.executeQuery(sql);
+                if (resultSet.next()) {
+                    Cliente cliente = new Cliente(
+                            resultSet.getInt("id"),
+                            resultSet.getString("nick"),
+                            resultSet.getString("password"),
+                            resultSet.getString("avatar"),
+                            resultSet.getString("nombre"),
+                            resultSet.getString("apellido1"),
+                            resultSet.getString("apellido2"),
+                            resultSet.getString("email"),
+                            resultSet.getString("telefono")
+                    );
+                    return cliente;
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            return null;
+        }
 }
