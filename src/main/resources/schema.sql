@@ -11,7 +11,7 @@ CREATE TABLE cliente (
      apellido1 VARCHAR(100),
      apellido2 VARCHAR(100),
      email VARCHAR(20),
-     teléfono VARCHAR(9)
+     telefono VARCHAR(9)
 );
 
 CREATE TABLE post (
@@ -33,9 +33,9 @@ CREATE TABLE comentario (
     comentario VARCHAR(512) NOT NULL,
     fecha_comentario DATE NOT NULL,
     id_cliente INT UNSIGNED NOT NULL,
-    id_seccion INT UNSIGNED NOT NULL,
+    id_post INT UNSIGNED NOT NULL,
     FOREIGN KEY (id_cliente) REFERENCES cliente(id),
-    FOREIGN KEY (id_seccion) REFERENCES seccion(id)
+    FOREIGN KEY (id_post) REFERENCES post(id)
 );
 
 CREATE TABLE tipo (

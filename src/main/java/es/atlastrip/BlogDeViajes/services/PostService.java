@@ -31,6 +31,42 @@ public class PostService {
         return posts;
     }
 
+    public ArrayList<Post> listarPostsVista() throws SQLException {
+        ArrayList<Post> posts = new ArrayList<>();
+        String sql = "SELECT * FROM vista_post_cliente";
+        Statement consulta = MYSQL.connect().createStatement();
+        ResultSet resultSet = consulta.executeQuery(sql);
+        while (resultSet.next()) {
+            Post post = new Post(
+                    resultSet.getInt("id_post"),
+                    resultSet.getString("titulo"),
+                    resultSet.getInt("id_cliente"),
+                    resultSet.getString("nick"),
+                    resultSet.getString("descripcion")
+            );
+            posts.add(post);
+        }
+        return posts;
+    }
+
+    public ArrayList<Post> listarLastPostsVista() throws SQLException {
+        ArrayList<Post> posts = new ArrayList<>();
+        String sql = "SELECT * FROM vista_post_cliente ORDER BY id_post DESC LIMIT 3";
+        Statement consulta = MYSQL.connect().createStatement();
+        ResultSet resultSet = consulta.executeQuery(sql);
+        while (resultSet.next()) {
+            Post post = new Post(
+                    resultSet.getInt("id_post"),
+                    resultSet.getString("titulo"),
+                    resultSet.getInt("id_cliente"),
+                    resultSet.getString("nick"),
+                    resultSet.getString("descripcion")
+            );
+            posts.add(post);
+        }
+        return posts;
+    }
+
     public void crearPost(Post post) throws SQLException {
         Statement consulta = MYSQL.connect().createStatement();
 
