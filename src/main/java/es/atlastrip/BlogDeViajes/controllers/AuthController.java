@@ -28,4 +28,5 @@ public class AuthController {
         new ClienteService().crearCliente(cliente);
         return "redirect:/login";
     }
+    
 }
