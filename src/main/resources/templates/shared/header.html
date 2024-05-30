@@ -25,7 +25,11 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                    <li>
+                        <form th:action="@{/logout}" method="post">
+                            <input class="dropdown-item" type="submit" value="Cerrar sesión"/>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
