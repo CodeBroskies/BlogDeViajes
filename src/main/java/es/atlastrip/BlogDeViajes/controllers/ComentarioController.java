@@ -18,7 +18,6 @@ public class ComentarioController {
     @GetMapping("/listar")
     public String listar(@RequestParam Model model) throws SQLException {
         String busqueda = "";
-        ArrayList<Comentario> comentarios = service.listarComentarios();
         model.addAttribute("comentarios", service.listarComentarios());
         model.addAttribute("comentario", new Comentario());
         model.addAttribute("busqueda", busqueda);

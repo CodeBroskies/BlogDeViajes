@@ -18,7 +18,6 @@ public class TipoController {
     @GetMapping("/listar")
     public String listar(@RequestParam Model model) throws SQLException {
         String busqueda = "";
-        ArrayList<Tipo> tipos = service.listarTipos();
         model.addAttribute("tipos", service.listarTipos());
         model.addAttribute("tipo", new Tipo());
         model.addAttribute("busqueda", busqueda);

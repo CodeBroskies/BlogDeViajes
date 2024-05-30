@@ -18,7 +18,6 @@ public class SeccionController {
     @GetMapping("/listar")
     public String listar(@RequestParam Model model) throws SQLException {
         String busqueda = "";
-        ArrayList<Seccion> seccions = service.listarSeccions();
         model.addAttribute("seccions", service.listarSeccions());
         model.addAttribute("seccion", new Seccion());
         model.addAttribute("busqueda", busqueda);

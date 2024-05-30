@@ -18,7 +18,6 @@ public class PostController {
     @GetMapping("/listar")
     public String listar(@RequestParam Model model) throws SQLException {
         String busqueda = "";
-        ArrayList<Post> posts = service.listarPosts();
         model.addAttribute("posts", service.listarPosts());
         model.addAttribute("post", new Post());
         model.addAttribute("busqueda", busqueda);
