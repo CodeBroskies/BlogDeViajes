@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class PostService {
 
     ConnectionMySql MYSQL = new ConnectionMySql();

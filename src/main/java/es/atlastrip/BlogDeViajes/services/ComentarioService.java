@@ -3,13 +3,15 @@ package es.atlastrip.BlogDeViajes.services;
 import es.atlastrip.BlogDeViajes.ConnectionMySql;
 import es.atlastrip.BlogDeViajes.models.Comentario;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class ComentarioService {
 
     ConnectionMySql MYSQL = new ConnectionMySql();

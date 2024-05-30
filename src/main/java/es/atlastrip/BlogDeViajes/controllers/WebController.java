@@ -14,4 +14,15 @@ public class WebController {
     public String posts() {
         return "posts";
     }
+
+    @GetMapping("/crearpost")
+    public String crearpost() {
+        return "createpost";
+    }
+
+    @GetMapping("/verpost")
+    public String verpost() {
+        return "post";
+    }
+
 }
