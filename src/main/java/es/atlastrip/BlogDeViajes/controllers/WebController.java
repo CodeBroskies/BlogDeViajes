@@ -12,14 +12,17 @@ import java.sql.SQLException;
 
 @Controller
 public class WebController {
+
+    PostService service = new PostService();
+
     @GetMapping("/")
-    public String index() {
+    public String index(Model model) throws SQLException {
+        model.addAttribute("lastPosts", service.listarLastPostsVista());
         return "index";
     }
 
     @GetMapping("/post")
     public String posts(Model model) throws SQLException {
-        PostService service = new PostService();
         String busqueda = "";
         model.addAttribute("posts", service.listarPostsVista());
         model.addAttribute("busqueda", busqueda);
