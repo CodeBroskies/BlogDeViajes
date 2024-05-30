@@ -54,7 +54,7 @@
                 </label>
             </div>
             <button class="btn btn-primary w-100 py-2" type="submit">Entrar</button>
-            <div class="d-flex justify-content-center mt-2" th:if="${param.error}">
+            <div class="d-flex justify-content-center mt-2 text-danger" th:if="${param.error}">
                 Nombre y contraseña incorrectos.</div>
             <div class="d-flex justify-content-center mt-2">
                 <a href="/register">No tengo una cuenta</a>

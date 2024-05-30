@@ -42,6 +42,8 @@ public class SecurityConfiguration {
                             @Override
                             public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
                                 System.out.println("Un usuario ha fallado el formulario de logeo: " + exception.getMessage());
+                                String redirectUrl = request.getContextPath() + "/login?error";
+                                response.sendRedirect(redirectUrl);
                             }
                         })
                         .permitAll()
