@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class SeccionService {
     ConnectionMySql MYSQL = new ConnectionMySql();
 
