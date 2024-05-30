@@ -1,7 +1,14 @@
 package es.atlastrip.BlogDeViajes.controllers;
 
+import es.atlastrip.BlogDeViajes.models.Post;
+import es.atlastrip.BlogDeViajes.services.PostService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.sql.SQLException;
 
 @Controller
 public class WebController {
@@ -11,12 +18,20 @@ public class WebController {
     }
 
     @GetMapping("/post")
-    public String posts() {
+    public String posts(Model model) throws SQLException {
+        PostService service = new PostService();
+        String busqueda = "";
+        model.addAttribute("posts", service.listarPostsVista());
+        model.addAttribute("busqueda", busqueda);
         return "posts";
     }
 
     @GetMapping("/crearpost")
-    public String crearpost() {
+    public String crearpost(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        if (userDetails == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("username", userDetails.getUsername());
         return "createpost";
     }
 

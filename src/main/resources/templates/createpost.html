@@ -44,7 +44,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center mb-2">
                     <img src="iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">
-                    @Usuario
+                    <div th:text="${username}"></div>
                 </div>
                 <form>
                     <div th:replace="~{posts/sectionpost}"></div>
