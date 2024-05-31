@@ -28,7 +28,7 @@ public class ComentarioController {
     public String eliminar(@RequestParam("id") int id, Model model) throws SQLException {
         service.eliminarComentario(id);
         model.addAttribute("comentarios", service.listarComentarios());
-        return "redirect:/comentarios/listar?pagina=1";
+        return "redirect:/comentarios/listar";
     }
 
     @GetMapping("/modificar")
@@ -41,14 +41,14 @@ public class ComentarioController {
     public String actualizar(@ModelAttribute Comentario comentario, Model model) throws SQLException {
         service.actualizarComentario(comentario);
         model.addAttribute("comentarios", service.listarComentarios());
-        return "redirect:/comentarios/listar?pagina=1";
+        return "redirect:/comentarios/listar";
     }
 
     @PostMapping("/agregar")
     public String agregar(@ModelAttribute Comentario comentario, Model model) throws SQLException {
         service.crearComentario(comentario);
         model.addAttribute("comentarios", service.listarComentarios());
-        return "redirect:/comentarios/listar?pagina=1";
+        return "redirect:/comentarios/listar";
     }
 
 }

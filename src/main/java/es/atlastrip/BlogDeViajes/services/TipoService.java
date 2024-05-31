@@ -1,6 +1,7 @@
 package es.atlastrip.BlogDeViajes.services;
 
 import es.atlastrip.BlogDeViajes.ConnectionMySql;
+import es.atlastrip.BlogDeViajes.models.Seccion;
 import es.atlastrip.BlogDeViajes.models.Tipo;
 
 import java.sql.SQLException;
@@ -18,7 +19,7 @@ public class TipoService {
 
     public ArrayList<Tipo> listarTipos() throws SQLException {
         ArrayList<Tipo> tipos = new ArrayList<>();
-        String sql = "SELECT * FROM tipo";
+        String sql = "SELECT * FROM `vista_tipo_seccion`";
         Statement consulta = MYSQL.connect().createStatement();
         ResultSet resultSet = consulta.executeQuery(sql);
         while (resultSet.next()) {
@@ -26,7 +27,8 @@ public class TipoService {
                     resultSet.getInt("id"),
                     resultSet.getString("nombre"),
                     resultSet.getString("texto"),
-                    resultSet.getString("urlImagen")
+                    resultSet.getString("urlImagen"),
+                    resultSet.getInt("seccion_id")
             );
 
             tipos.add(tipo);
@@ -76,5 +78,14 @@ public class TipoService {
         return null;
     }
 
+    public void crearTipoSeccion(int seccionId, int tipoId) throws SQLException {
+        Statement consulta = MYSQL.connect().createStatement();
+
+        String sql = "INSERT INTO seccion_tipo(id_seccion, id_tipo) VALUES ('"
+                + seccionId + "','" + tipoId + "');";
+
+        consulta.executeUpdate(sql);
+        consulta.close();
+    }
 
 }

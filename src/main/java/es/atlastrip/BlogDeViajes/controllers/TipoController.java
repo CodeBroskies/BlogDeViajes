@@ -28,7 +28,7 @@ public class TipoController {
     public String eliminar(@RequestParam("id") int id, Model model) throws SQLException {
         service.eliminarTipo(id);
         model.addAttribute("tipos", service.listarTipos());
-        return "redirect:/tipos/listar?pagina=1";
+        return "redirect:/tipos/listar";
     }
 
     @GetMapping("/modificar")
@@ -41,13 +41,13 @@ public class TipoController {
     public String actualizar(@ModelAttribute Tipo tipo, Model model) throws SQLException {
         service.actualizarTipo(tipo);
         model.addAttribute("tipos", service.listarTipos());
-        return "redirect:/tipos/listar?pagina=1";
+        return "redirect:/tipos/listar";
     }
 
     @PostMapping("/agregar")
     public String agregar(@ModelAttribute Tipo tipo, Model model) throws SQLException {
         service.crearTipo(tipo);
         model.addAttribute("tipos", service.listarTipos());
-        return "redirect:/tipos/listar?pagina=1";
+        return "redirect:/tipos/listar";
     }
 }

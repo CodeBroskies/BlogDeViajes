@@ -5,12 +5,25 @@ public class Tipo {
     private String nombre;
     private String texto;
     private String urlImagen;
+    private int seccion_id;
 
     public Tipo() {
-        this.nombre = nombre;
+
     }
 
     public Tipo(int id, String nombre, String texto, String urlImagen) {
+        this.id = id;
+        this.nombre = nombre;
+        this.texto = texto;
+        this.urlImagen = urlImagen;
+    }
+
+    public Tipo(int id, String nombre, String texto, String urlImagen, int seccion_id) {
+        this.id = id;
+        this.nombre = nombre;
+        this.texto = texto;
+        this.urlImagen = urlImagen;
+        this.seccion_id = seccion_id;
     }
 
     public int getId() {
@@ -43,5 +56,13 @@ public class Tipo {
 
     public void setUrlImagen(String urlImagen) {
         this.urlImagen = urlImagen;
+    }
+
+    public int getSeccion_id() {
+        return seccion_id;
+    }
+
+    public void setSeccion_id(int seccion_id) {
+        this.seccion_id = seccion_id;
     }
 }
