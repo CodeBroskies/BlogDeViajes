@@ -49,14 +49,26 @@ public class SeccionService {
         return secciones;
     }
 
-    public void crearSeccion(Seccion seccion) throws SQLException {
+    public int crearSeccion(Seccion seccion) throws SQLException {
+        int nuevaSeccionId;
+
         Statement consulta = MYSQL.connect().createStatement();
 
         String sql = "INSERT INTO seccion(id, titulo, id_post) VALUES ('"
                 + seccion.getId() + "','" + seccion.getTitulo() + "','" + seccion.getId_post() + "');";
 
-        consulta.executeUpdate(sql);
+        consulta.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+
+        ResultSet idsGeneradas = consulta.getGeneratedKeys();
+        if (idsGeneradas.next()) {
+            nuevaSeccionId = idsGeneradas.getInt(1);
+        } else {
+            throw new SQLException("No se pudo crear el post");
+        }
+
         consulta.close();
+
+        return nuevaSeccionId;
     }
 
     public void eliminarSeccion(int id) throws SQLException {

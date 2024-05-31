@@ -1,11 +1,24 @@
 package es.atlastrip.BlogDeViajes.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Post {
     private int id;
     private String titulo;
     private int id_cliente;
     private String username;
     private String descripcion;
+    private List<Seccion> secciones = new ArrayList<>();
+
+    public Post(int id, String titulo, int id_cliente, String username, String descripcion, List<Seccion> secciones) {
+        this.id = id;
+        this.titulo = titulo;
+        this.id_cliente = id_cliente;
+        this.username = username;
+        this.descripcion = descripcion;
+        this.secciones = secciones;
+    }
 
     public Post(int id, String titulo, int id_cliente, String username, String descripcion) {
         this.id = id;
@@ -63,5 +76,13 @@ public class Post {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<Seccion> getSecciones() {
+        return secciones;
+    }
+
+    public void setSecciones(List<Seccion> secciones) {
+        this.secciones = secciones;
     }
 }

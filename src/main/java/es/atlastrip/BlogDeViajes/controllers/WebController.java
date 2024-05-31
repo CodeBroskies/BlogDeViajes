@@ -41,10 +41,15 @@ public class WebController {
         if (userDetails == null) {
             return "redirect:/login";
         }
+
+        Post nuevoPost = new Post();
+
+        nuevoPost.getSecciones().add(new Seccion());
+        nuevoPost.getSecciones().add(new Seccion());
+        nuevoPost.getSecciones().add(new Seccion());
+
         model.addAttribute("username", userDetails.getUsername());
-        model.addAttribute("post", new Post());
-        model.addAttribute("secciones", new ArrayList<Seccion>());
-        model.addAttribute("tipos", new ArrayList<Tipo>());
+        model.addAttribute("post", nuevoPost);
         return "createpost";
     }
 

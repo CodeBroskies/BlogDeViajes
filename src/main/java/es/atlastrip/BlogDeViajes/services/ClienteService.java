@@ -96,6 +96,27 @@ public class ClienteService implements UserDetailsService {
             return null;
         }
 
+        public Cliente obtenerCliente(String nick) throws SQLException {
+            String sql = "SELECT * FROM cliente WHERE nick = '" + nick + "'";
+            Statement consulta = MYSQL.connect().createStatement();
+            ResultSet resultSet = consulta.executeQuery(sql);
+            if (resultSet.next()) {
+                Cliente cliente = new Cliente(
+                        resultSet.getInt("id"),
+                        resultSet.getString("nick"),
+                        resultSet.getString("password"),
+                        resultSet.getString("avatar"),
+                        resultSet.getString("nombre"),
+                        resultSet.getString("apellido1"),
+                        resultSet.getString("apellido2"),
+                        resultSet.getString("email"),
+                        resultSet.getString("telefono")
+                );
+                return cliente;
+            }
+            return null;
+        }
+
         @Override
         public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
             String sql = "SELECT * FROM cliente WHERE nick = '" + username +"'";

@@ -4,9 +4,12 @@ import es.atlastrip.BlogDeViajes.models.Comentario;
 import es.atlastrip.BlogDeViajes.models.Post;
 import es.atlastrip.BlogDeViajes.models.Seccion;
 import es.atlastrip.BlogDeViajes.models.Tipo;
+import es.atlastrip.BlogDeViajes.services.ClienteService;
 import es.atlastrip.BlogDeViajes.services.PostService;
 import es.atlastrip.BlogDeViajes.services.SeccionService;
 import es.atlastrip.BlogDeViajes.services.TipoService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -63,16 +66,16 @@ public class PostController {
     }
 
     @PostMapping("/crear")
-    public String crear(@ModelAttribute("post") Post post, @ModelAttribute("secciones") ArrayList<Seccion> secciones, @ModelAttribute("tipos") ArrayList<Tipo> tipos, Model model) throws SQLException {
-        postService.crearPost(post);
-        for (Seccion seccion : secciones) {
-            seccionService.crearSeccion(seccion);
+    public String crear(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute("post") Post post, Model model) throws SQLException {
+        post.setId_cliente(new ClienteService().obtenerCliente(userDetails.getUsername()).getId());
+        int nuevoPostId = postService.crearPost(post);
+        for (Seccion seccion : post.getSecciones()) {
+            seccion.setId_post(nuevoPostId);
+            int nuevaSeccionId = seccionService.crearSeccion(seccion);
+            int nuevoTipoId = tipoService.crearTipo(new Tipo("Contenido", seccion.getContenido(), seccion.getUrl_image()));
+            tipoService.crearTipoSeccion(nuevaSeccionId, nuevoTipoId);
         }
-        for (Tipo tipo : tipos) {
-            tipoService.crearTipo(tipo);
-            tipoService.crearTipoSeccion(tipo.getSeccion_id(), tipo.getId());
-        }
-        model.addAttribute("posts", postService.listarPosts());
-        return "posts";
+        model.addAttribute("posts", postService.listarPostsVista());
+        return "redirect:/post";
     }
 }

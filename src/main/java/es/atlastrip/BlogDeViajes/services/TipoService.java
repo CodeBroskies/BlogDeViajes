@@ -1,7 +1,6 @@
 package es.atlastrip.BlogDeViajes.services;
 
 import es.atlastrip.BlogDeViajes.ConnectionMySql;
-import es.atlastrip.BlogDeViajes.models.Seccion;
 import es.atlastrip.BlogDeViajes.models.Tipo;
 
 import java.sql.SQLException;
@@ -36,14 +35,26 @@ public class TipoService {
         return tipos;
     }
 
-    public void crearTipo(Tipo tipo) throws SQLException {
+    public int crearTipo(Tipo tipo) throws SQLException {
+        int nuevoTipoId;
+
         Statement consulta = MYSQL.connect().createStatement();
 
-        String sql = "INSERT INTO tipo(nombre, texto, urlImagen) VALUES ('"
+        String sql = "INSERT INTO tipo(nombre, texto, url_imagen) VALUES ('"
                 + tipo.getNombre() + "','" + tipo.getTexto() + "','" + tipo.getUrlImagen() + "');";
 
-        consulta.executeUpdate(sql);
+        consulta.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+
+        ResultSet idsGeneradas = consulta.getGeneratedKeys();
+        if (idsGeneradas.next()) {
+            nuevoTipoId = idsGeneradas.getInt(1);
+        } else {
+            throw new SQLException("No se pudo crear el post");
+        }
+
         consulta.close();
+
+        return nuevoTipoId;
     }
 
     public void eliminarTipo(int id) throws SQLException {
