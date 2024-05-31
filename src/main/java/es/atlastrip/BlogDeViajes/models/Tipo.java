@@ -11,6 +11,13 @@ public class Tipo {
 
     }
 
+    public Tipo(String nombre, String texto, String urlImagen) {
+        this.id = id;
+        this.nombre = nombre;
+        this.texto = texto;
+        this.urlImagen = urlImagen;
+    }
+
     public Tipo(int id, String nombre, String texto, String urlImagen) {
         this.id = id;
         this.nombre = nombre;

@@ -3,6 +3,7 @@ package es.atlastrip.BlogDeViajes.services;
 import es.atlastrip.BlogDeViajes.ConnectionMySql;
 import es.atlastrip.BlogDeViajes.models.Post;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -67,15 +68,28 @@ public class PostService {
         return posts;
     }
 
-    public void crearPost(Post post) throws SQLException {
+    public int crearPost(Post post) throws SQLException {
+        int nuevoPostId;
+
         Statement consulta = MYSQL.connect().createStatement();
 
-        String sql = "INSERT INTO post(nombre, apellido, telefono, email, edad) VALUES ('"
-                + post.getId() + "','" + post.getTitulo() + "','" + post.getId_cliente()  + "');";
+        String sql = "INSERT INTO post(titulo, id_cliente) VALUES ('"
+                + post.getTitulo() + "','" + post.getId_cliente() + "');";
 
-        consulta.executeUpdate(sql);
+        consulta.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+
+        ResultSet idsGeneradas = consulta.getGeneratedKeys();
+        if (idsGeneradas.next()) {
+            nuevoPostId = idsGeneradas.getInt(1);
+        } else {
+            throw new SQLException("No se pudo crear el post");
+        }
+
         consulta.close();
+
+        return nuevoPostId;
     }
+
 
     public void eliminarPost(int id) throws SQLException {
         Statement consulta = MYSQL.connect().createStatement();
