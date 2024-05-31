@@ -31,7 +31,7 @@ CREATE TABLE seccion (
 CREATE TABLE comentario (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     comentario VARCHAR(512) NOT NULL,
-    fecha_comentario DATE NOT NULL,
+    fecha_comentario DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     id_cliente INT UNSIGNED NOT NULL,
     id_post INT UNSIGNED NOT NULL,
     FOREIGN KEY (id_cliente) REFERENCES cliente(id),

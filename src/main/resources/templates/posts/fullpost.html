@@ -21,6 +21,16 @@
         <div class="card py-4 px-5 mb-2" style="width: 64rem;">
             <h2 class="m-0 mt-2 fs-3">Comentarios</h2>
             <hr>
+            <div class="card p-3 mb-2">
+                <form th:action="@{/comentarios/agregar}" method="post" th:object="${comentario}">
+                    Escribe un comentario
+                    <input type="hidden" th:field="*{id_post}" />
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" th:field="*{comentario}">
+                        <button class="btn btn-success" type="submit"><i class="bi bi-send"></i></button>
+                    </div>
+                </form>
+            </div>
             <div class="card p-3 mb-2" th:each="comentario : ${comentarios}">
                 <div class="d-flex align-items-center">
                     <img src="iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">

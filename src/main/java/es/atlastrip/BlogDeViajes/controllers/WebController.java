@@ -1,5 +1,6 @@
 package es.atlastrip.BlogDeViajes.controllers;
 
+import es.atlastrip.BlogDeViajes.models.Comentario;
 import es.atlastrip.BlogDeViajes.models.Post;
 import es.atlastrip.BlogDeViajes.models.Seccion;
 import es.atlastrip.BlogDeViajes.models.Tipo;
@@ -54,12 +55,22 @@ public class WebController {
     }
 
     @GetMapping("/verpost")
-    public String verpost(@RequestParam("id") int id_post, Model model) throws SQLException {
+    public String verpost(@AuthenticationPrincipal UserDetails userDetails, @RequestParam("id") int id_post, Model model) throws SQLException {
+        if (userDetails == null) {
+            return "redirect:/login";
+        }
+
         Post post = new PostService().obtenerPost(id_post);
+
+        Comentario comentario = new Comentario();
+        comentario.setId_post(id_post);
+
         model.addAttribute("post", post);
         model.addAttribute("usuario", new ClienteService().obtenerCliente(post.getId_cliente()));
         model.addAttribute("secciones", new SeccionService().listarContenidoPorPost(id_post));
         model.addAttribute("comentarios", new ComentarioService().listarComentariosPorPost(id_post));
+        model.addAttribute("comentario", comentario);
+
         return "post";
     }
 
