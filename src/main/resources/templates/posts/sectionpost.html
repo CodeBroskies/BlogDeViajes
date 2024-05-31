@@ -1,15 +1,17 @@
-<div class="mt-2">
-    Sección
-</div>
-<div class="card p-3">
-    Título Sección
-    <input type="text" class="form-control mb-2">
-    Contenido Sección
-    <div class="form-floating">
-        <textarea class="form-control" placeholder="Escribe el contenido aquí" id="floatingTextarea2" style="height: 100px"></textarea>
-        <label for="floatingTextarea2">Texto</label>
+<div th:fragment="section">
+    <div class="mt-2">
+        Sección
     </div>
-    <a href="#" class="mt-3 text-black pe-auto">
-        <i class="bi bi-link me-2"></i>Agregar foto
-    </a>
+    <div class="card p-3">
+        Título Sección
+        <input type="text" class="form-control mb-2" th:field="*{seccion.titulo}">
+        Contenido Sección
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Escribe el contenido aquí" th:field="*{tipo.contenido}" style="height: 100px"></textarea>
+            <label>Texto</label>
+        </div>
+        <a href="#" class="mt-3 text-black pe-auto">
+            <i class="bi bi-link me-2"></i>Agregar foto
+        </a>
+    </div>
 </div>

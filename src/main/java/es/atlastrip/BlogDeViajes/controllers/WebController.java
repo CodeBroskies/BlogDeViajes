@@ -1,14 +1,21 @@
 package es.atlastrip.BlogDeViajes.controllers;
 
 import es.atlastrip.BlogDeViajes.models.Post;
+import es.atlastrip.BlogDeViajes.models.Seccion;
+import es.atlastrip.BlogDeViajes.models.Tipo;
+import es.atlastrip.BlogDeViajes.services.ClienteService;
+import es.atlastrip.BlogDeViajes.services.ComentarioService;
 import es.atlastrip.BlogDeViajes.services.PostService;
+import es.atlastrip.BlogDeViajes.services.SeccionService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @Controller
 public class WebController {
@@ -35,11 +42,19 @@ public class WebController {
             return "redirect:/login";
         }
         model.addAttribute("username", userDetails.getUsername());
+        model.addAttribute("post", new Post());
+        model.addAttribute("secciones", new ArrayList<Seccion>());
+        model.addAttribute("tipos", new ArrayList<Tipo>());
         return "createpost";
     }
 
     @GetMapping("/verpost")
-    public String verpost() {
+    public String verpost(@RequestParam("id") int id_post, Model model) throws SQLException {
+        Post post = new PostService().obtenerPost(id_post);
+        model.addAttribute("post", post);
+        model.addAttribute("usuario", new ClienteService().obtenerCliente(post.getId_cliente()));
+        model.addAttribute("secciones", new SeccionService().listarContenidoPorPost(id_post));
+        model.addAttribute("comentarios", new ComentarioService().listarComentariosPorPost(id_post));
         return "post";
     }
 
