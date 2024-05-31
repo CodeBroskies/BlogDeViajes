@@ -50,7 +50,7 @@ public class ComentarioController {
     public String agregar(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute Comentario comentario, Model model) throws SQLException {
         service.crearComentario(userDetails, comentario);
         model.addAttribute("comentarios", service.listarComentarios());
-        return "redirect:/comentarios/listar";
+        return "redirect:/verpost?id=" + comentario.getId_post();
     }
 
 }
