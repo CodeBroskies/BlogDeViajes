@@ -1,29 +1,18 @@
-<div>
+<div class="bg-body-tertiary">
     <div class="d-flex justify-content-center">
         <div class="card py-4 px-5 m-2" style="width: 64rem;">
             <h5 class="d-flex align-items-center">
                 <img src="iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">
-                <p class="username m-0 fs-6">@NuttingMyPassion</p>
+                <p class="username m-0 fs-6" th:text="'@' + ${usuario.nick}"></p>
             </h5>
-            <h1 class="m-0 fs-2">Mi viaje a Nicaragua</h1>
+            <h1 class="m-0 fs-2" th:text="${post.titulo}"></h1>
             <hr>
-            <div>
-                <h2 class="fs-4">Mi primer día</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque doloribus ea eum id iusto perferendis quas
-                    rem reprehenderit suscipit vel. Aliquid commodi dolor fugit ipsam iste modi officia sint temporibus!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque doloribus ea eum id iusto perferendis quas
-                    rem reprehenderit suscipit vel. Aliquid commodi dolor fugit ipsam iste modi officia sint temporibus!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque doloribus ea eum id iusto perferendis quas
-                    rem reprehenderit suscipit vel. Aliquid commodi dolor fugit ipsam iste modi officia sint temporibus!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque doloribus ea eum id iusto perferendis quas
-                    rem reprehenderit suscipit vel. Aliquid commodi dolor fugit ipsam iste modi officia sint temporibus!</p>
-            </div>
-            <div>
-                <h2 class="fs-4">El atardecer en Nicaragua</h2>
+            <div th:each="seccion : ${secciones}">
+                <h2 class="fs-4" th:text="${seccion.titulo}"></h2>
                 <div class="d-flex flex-row">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque doloribus ea eum id iusto perferendis quas
-                        rem reprehenderit suscipit vel. Aliquid commodi dolor fugit ipsam iste modi officia sint temporibus!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque doloribus ea eum id iusto perferendis quas
-                        rem reprehenderit suscipit vel. Aliquid commodi dolor fugit ipsam iste modi officia sint temporibus!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque doloribus ea eum id iusto perferendis quas
-                        rem reprehenderit suscipit vel. Aliquid commodi dolor fugit ipsam iste modi officia sint temporibus!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque doloribus ea eum id iusto perferendis quas
-                        rem reprehenderit suscipit vel. Aliquid commodi dolor fugit ipsam iste modi officia sint temporibus!</p>
-                    <img src="https://images.wallpaperscraft.com/image/single/sea_pier_sunset_1236969_1280x720.jpg" class="p-3" style="max-width: 32rem;">
+                    <p th:text="${seccion.contenido}">
+                    </p>
+                    <img th:if="${seccion.url_image == null}" th:src="${seccion.url_image}" class="p-3" style="max-width: 32rem;">
                 </div>
             </div>
         </div>
@@ -33,18 +22,21 @@
             <h2 class="m-0 mt-2 fs-3">Comentarios</h2>
             <hr>
             <div class="card p-3 mb-2">
-                <div class="d-flex align-items-center">
-                    <img src="iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">
-                    <p class="username m-0">@AlguienAleatorio</p>
-                </div>
-                <p class="m-0">Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta Me encanta</p>
+                <form th:action="@{/comentarios/agregar}" method="post" th:object="${comentario}">
+                    Escribe un comentario
+                    <input type="hidden" th:field="*{id_post}" />
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" th:field="*{comentario}">
+                        <button class="btn btn-success" type="submit"><i class="bi bi-send"></i></button>
+                    </div>
+                </form>
             </div>
-            <div class="card p-3 mb-2">
+            <div class="card p-3 mb-2" th:each="comentario : ${comentarios}">
                 <div class="d-flex align-items-center">
                     <img src="iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">
-                    <p class="username m-0">@Persona</p>
+                    <p class="username m-0" th:text="'@' + ${comentario.username}"></p>
                 </div>
-                <p class="m-0">Jamás pensé que Nicaragua podría ser tan bonito</p>
+                <p class="m-0" th:text="${comentario.comentario}"></p>
             </div>
         </div>
     </div>

@@ -7,13 +7,24 @@ public class Comentario {
     private String comentario;
     private Date fecha_comentario;
     private int id_cliente;
-    private int id_seccion;
+    private int id_post;
+    private String username;
 
-    public Comentario(int id, String comentario, Date fecha_comentario, int id_seccion, int id_cliente) {
+    public Comentario(int id, String comentario, Date fecha_comentario, int id_post, int id_cliente) {
         this.id = id;
         this.comentario = comentario;
         this.fecha_comentario = fecha_comentario;
-        this.id_seccion = id_seccion;
+        this.id_post = id_post;
+        this.id_cliente = id_cliente;
+    }
+
+    public Comentario(int id, String comentario, Date fecha_comentario, int id_post, int id_cliente, String username) {
+        this.id = id;
+        this.comentario = comentario;
+        this.fecha_comentario = fecha_comentario;
+        this.id_post = id_post;
+        this.id_cliente = id_cliente;
+        this.username = username;
     }
 
     public Comentario() {
@@ -52,11 +63,19 @@ public class Comentario {
         this.id_cliente = id_cliente;
     }
 
-    public int getId_seccion() {
-        return id_seccion;
+    public int getId_post() {
+        return id_post;
     }
 
-    public void setId_seccion(int id_seccion) {
-        this.id_seccion = id_seccion;
+    public void setId_post(int id_post) {
+        this.id_post = id_post;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
