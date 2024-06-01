@@ -135,6 +135,16 @@ public class ClienteService implements UserDetailsService {
                             resultSet.getString("email"),
                             resultSet.getString("telefono")
                     );
+
+                    sql = "SELECT r.name FROM roles r INNER JOIN user_roles ur ON r.id = ur.role_id WHERE ur.user_id = " + cliente.getId();
+                    try (ResultSet rolesResultSet = consulta.executeQuery(sql)) {
+                        ArrayList<String> roles = new ArrayList<>();
+                        while (rolesResultSet.next()) {
+                            roles.add(rolesResultSet.getString("name"));
+                        }
+                        cliente.setRoles(roles);
+                    }
+
                     return cliente;
                 }
             } catch (Exception e) {

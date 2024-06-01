@@ -1,11 +1,11 @@
 package es.atlastrip.BlogDeViajes.models;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class Cliente implements UserDetails {
     private int id;
@@ -17,9 +17,12 @@ public class Cliente implements UserDetails {
     private String apellido2;
     private String email;
     private String telefono;
+
+    // Atributos requeridos por Spring Security
     private boolean accountNonLocked;
     private int failedAttempt;
     private Date lockTime;
+    private List<String> roles;
 
     public Cliente(int id, String nick, String password, String avatar, String nombre, String apellido1, String apellido2, String email, String telefono) {
         this.id = id;
@@ -52,7 +55,13 @@ public class Cliente implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        if (roles != null) {
+            for (String role : roles) {
+                authorities.add(new SimpleGrantedAuthority(role));
+            }
+        }
+        return authorities;
     }
 
     public String getPassword() {
@@ -144,4 +153,31 @@ public class Cliente implements UserDetails {
         this.telefono = telefono;
     }
 
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public int getFailedAttempt() {
+        return failedAttempt;
+    }
+
+    public void setFailedAttempt(int failedAttempt) {
+        this.failedAttempt = failedAttempt;
+    }
+
+    public Date getLockTime() {
+        return lockTime;
+    }
+
+    public void setLockTime(Date lockTime) {
+        this.lockTime = lockTime;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
 }
