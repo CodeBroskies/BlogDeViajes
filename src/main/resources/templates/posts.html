@@ -40,6 +40,7 @@
         <div class="bg-body-tertiary">
             <div th:replace="~{posts/create}"></div>
             <div th:replace="~{posts/post}"></div>
+            <div class="display-6 text-center pb-4 m-0" th:if="${mensaje} != null" th:text="${mensaje}"></div>
         </div>
         <div th:replace="~{shared/footer}"></div>
 

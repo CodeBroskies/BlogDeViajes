@@ -50,6 +50,24 @@ public class PostService {
         return posts;
     }
 
+    public ArrayList<Post> listarPostsVista(String busqueda) throws SQLException {
+        ArrayList<Post> posts = new ArrayList<>();
+        String sql = "SELECT * FROM vista_post_cliente WHERE titulo LIKE '%" + busqueda + "%'";
+        Statement consulta = MYSQL.connect().createStatement();
+        ResultSet resultSet = consulta.executeQuery(sql);
+        while (resultSet.next()) {
+            Post post = new Post(
+                    resultSet.getInt("id_post"),
+                    resultSet.getString("titulo"),
+                    resultSet.getInt("id_cliente"),
+                    resultSet.getString("nick"),
+                    resultSet.getString("descripcion")
+            );
+            posts.add(post);
+        }
+        return posts;
+    }
+
     public ArrayList<Post> listarLastPostsVista() throws SQLException {
         ArrayList<Post> posts = new ArrayList<>();
         String sql = "SELECT * FROM vista_post_cliente ORDER BY id_post DESC LIMIT 3";

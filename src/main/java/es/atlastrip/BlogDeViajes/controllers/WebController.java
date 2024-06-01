@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @Controller
 public class WebController {
@@ -29,9 +30,18 @@ public class WebController {
     }
 
     @GetMapping("/post")
-    public String posts(Model model) throws SQLException {
-        String busqueda = "";
-        model.addAttribute("posts", service.listarPostsVista());
+    public String posts(@RequestParam(value = "busqueda", required = false) String busqueda, Model model) throws SQLException {
+        if (busqueda == null) {
+            busqueda = "";
+            model.addAttribute("posts", service.listarPostsVista());
+        } else {
+            ArrayList<Post> posts = service.listarPostsVista(busqueda);
+            if (posts.isEmpty()) {
+                model.addAttribute("mensaje", "No se han encontrado publicaciones");
+            } else {
+                model.addAttribute("posts", posts);
+            }
+        }
         model.addAttribute("busqueda", busqueda);
         return "posts";
     }

@@ -10,8 +10,8 @@
                 <li><a href="/post" class="nav-link px-2 link-dark">Blog</a></li>
             </ul>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="search" class="form-control" placeholder="Buscar..." aria-label="Search">
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" th:action="@{./post}" method="get">
+                <input type="search" class="form-control" id="busqueda" name="busqueda" placeholder="Buscar" th:value="${busqueda}" required>
             </form>
 
             <div class="dropdown text-end">
