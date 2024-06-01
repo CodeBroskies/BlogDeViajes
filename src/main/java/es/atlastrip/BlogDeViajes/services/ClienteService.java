@@ -23,7 +23,7 @@ public class ClienteService implements UserDetailsService {
             return new BCryptPasswordEncoder();
         }
 
-        ConnectionMySql MYSQL = new ConnectionMySql();
+        ConnectionMySql MYSQL = ConnectionMySql.getInstance();
 
         public ArrayList<Cliente> listarClientes() throws SQLException {
             ArrayList<Cliente> clientes = new ArrayList<>();

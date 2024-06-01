@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TipoService {
 
-    ConnectionMySql MYSQL = new ConnectionMySql();
+    ConnectionMySql MYSQL = ConnectionMySql.getInstance();
 
     public ArrayList<Tipo> listarTipos() throws SQLException {
         ArrayList<Tipo> tipos = new ArrayList<>();

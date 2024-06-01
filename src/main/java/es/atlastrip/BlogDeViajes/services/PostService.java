@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PostService {
 
-    ConnectionMySql MYSQL = new ConnectionMySql();
+    ConnectionMySql MYSQL = ConnectionMySql.getInstance();
 
     public ArrayList<Post> listarPosts() throws SQLException {
         ArrayList<Post> posts = new ArrayList<>();

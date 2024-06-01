@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SeccionService {
-    ConnectionMySql MYSQL = new ConnectionMySql();
+
+    ConnectionMySql MYSQL = ConnectionMySql.getInstance();
 
     public ArrayList<Seccion> listarSecciones() throws SQLException {
         ArrayList<Seccion> secciones = new ArrayList<>();
