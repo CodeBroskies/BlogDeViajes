@@ -28,7 +28,14 @@ public class WebController {
     @GetMapping("/")
     public String index(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
         model.addAttribute("lastPosts", service.listarLastPostsVista());
-        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+
+        if (userDetails == null) {
+            Cliente cliente = new Cliente();
+            cliente.setAvatar("null");
+            model.addAttribute("usuario", cliente);
+        } else {
+            model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        }
         return "index";
     }
 
@@ -47,7 +54,13 @@ public class WebController {
         }
         model.addAttribute("busqueda", busqueda);
 
-        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        if (userDetails == null) {
+            Cliente cliente = new Cliente();
+            cliente.setAvatar("null");
+            model.addAttribute("usuario", cliente);
+        } else {
+            model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        }
         return "posts";
     }
 
@@ -76,17 +89,17 @@ public class WebController {
             return "redirect:/login";
         }
 
-        Post post = new PostService().obtenerPost(id_post);
+        Post post = new PostService().obtenerPostCompleto(id_post);
 
         Comentario comentario = new Comentario();
         comentario.setId_post(id_post);
 
         model.addAttribute("post", post);
-        model.addAttribute("usuario", new ClienteService().obtenerCliente(post.getId_cliente()));
-        model.addAttribute("secciones", new SeccionService().listarContenidoPorPost(id_post));
+        model.addAttribute("creador", new ClienteService().obtenerCliente(post.getId_cliente()));
         model.addAttribute("comentarios", new ComentarioService().listarComentariosPorPost(id_post));
         model.addAttribute("comentario", comentario);
 
+        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
         return "post";
     }
 

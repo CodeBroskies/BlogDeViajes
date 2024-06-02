@@ -80,4 +80,20 @@ public class PostController {
         model.addAttribute("posts", postService.listarPostsVista());
         return "redirect:/post";
     }
+
+    @PostMapping("/editar")
+    public String editar(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute("post") Post post, Model model) throws SQLException {
+        if (new ClienteService().obtenerCliente(userDetails.getUsername()).getId() == post.getId_cliente()) {
+            for (Seccion seccion : post.getSecciones()) {
+                seccion.setId_post(post.getId());
+                if (!seccion.getContenido().isEmpty() && seccion.getUrl_image() != null) {
+                    int nuevaSeccionId = seccionService.crearSeccion(seccion);
+                    int nuevoTipoId = tipoService.crearTipo(new Tipo("Contenido", seccion.getContenido(), seccion.getUrl_image()));
+                    tipoService.crearTipoSeccion(nuevaSeccionId, nuevoTipoId);
+                }
+            }
+        }
+        model.addAttribute("posts", postService.listarPostsVista());
+        return "redirect:/verpost?id=" + post.getId();
+    }
 }

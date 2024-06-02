@@ -17,7 +17,7 @@
             <div class="dropdown text-end">
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <img th:src="(${usuario.avatar} == 'null') ? '/images/iconoUsuario.png' : ${usuario.avatar}" alt="mdo" width="45" height="45" class="rounded-circle">
+                    <img th:src="(${usuario.avatar} == 'null') ? '/images/iconoUsuario.jpg' : ${usuario.avatar}" alt="mdo" width="45" height="45" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                     <li><a class="dropdown-item" href="/login" sec:authorize="!isAuthenticated()">Iniciar sesión</a></li>

@@ -2,12 +2,13 @@
     <div class="d-flex justify-content-center">
         <div class="card py-4 px-5 m-2" style="width: 64rem;">
             <h5 class="d-flex align-items-center">
-                <img th:src="(${usuario.avatar} == 'null') ? '/images/iconoUsuario.jpg' : ${usuario.avatar}" alt="mdo" width="45" height="45" class="rounded-circle">
-                <p class="username m-0 fs-6 ms-2" th:text="'@' + ${usuario.nick}"></p>
+                <img th:src="(${creador.avatar} == 'null') ? '/images/iconoUsuario.jpg' : ${creador.avatar}" alt="mdo" width="45" height="45" class="rounded-circle">
+                <p class="username m-0 fs-6 ms-2" th:text="'@' + ${creador.nick}"></p>
+                <button class="btn btn-secondary ms-3" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi bi-pencil-square"></i> Editar post</button>
             </h5>
             <h1 class="m-0 fs-2" th:text="${post.titulo}"></h1>
             <hr>
-            <div th:each="seccion : ${secciones}">
+            <div th:each="seccion : ${post.secciones}">
                 <h2 class="fs-4" th:text="${seccion.titulo}"></h2>
                 <div class="d-flex flex-row">
                     <p th:text="${seccion.contenido}">
@@ -33,10 +34,47 @@
             </div>
             <div class="card p-3 mb-2" th:each="comentario : ${comentarios}">
                 <div class="d-flex align-items-center">
-                    <img th:src="(${usuario.avatar} == 'null') ? '/images/iconoUsuario.jpg' : ${usuario.avatar}" alt="mdo" width="40" height="40" class="rounded-circle">
+                    <img th:src="(${comentario.avatar} == 'null') ? '/images/iconoUsuario.jpg' : ${comentario.avatar}" alt="mdo" width="40" height="40" class="rounded-circle">
                     <p class="username m-0 ms-1" th:text="'@' + ${comentario.username}"></p>
                 </div>
                 <p class="m-0" th:text="${comentario.comentario}"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="editModalCenterTitle">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLongTitle">Editar post</h5>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/posts/editar}" method="post" th:object="${post}">
+                        Título Publicación
+                        <input type="text" class="form-control mb-2" th:field="*{titulo}">
+                        <div th:each="seccion, iStat : *{secciones}">
+                            <div>
+                                <div class="mt-2" th:text="'Sección ' + (${iStat.index} + 1)">
+                                </div>
+                                <div class="card p-3">
+                                    Título Sección
+                                    <input type="text" class="form-control mb-2" th:field="*{secciones[__${iStat.index}__].titulo}">
+                                    Contenido Sección
+                                    <div class="form-floating mb-2">
+                                        <textarea class="form-control" placeholder="Escribe el contenido aquí" th:field="*{secciones[__${iStat.index}__].contenido}" style="height: 100px"></textarea>
+                                        <label>Texto</label>
+                                    </div>
+                                    <label><i class="bi bi-link me-2"></i>Agregar foto (Opcional)</label>
+                                    <input type="text" class="form-control" placeholder="Url imagen" th:field="*{secciones[__${iStat.index}__].url_image}">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Guardar cambios</button>
+                </div>
             </div>
         </div>
     </div>
