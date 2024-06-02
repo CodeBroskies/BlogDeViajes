@@ -39,7 +39,7 @@ public class ComentarioController {
         return "comentarioModificar";
     }
 
-    @PostMapping("/actualizar")
+    @PutMapping("/actualizar")
     public String actualizar(@ModelAttribute Comentario comentario, Model model) throws SQLException {
         service.actualizarComentario(comentario);
         model.addAttribute("comentarios", service.listarComentarios());

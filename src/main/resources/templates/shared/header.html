@@ -17,17 +17,18 @@
             <div class="dropdown text-end">
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="/images/iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">
+                    <img th:src="(${usuario.avatar} == 'null') ? '/images/iconoUsuario.png' : ${usuario.avatar}" alt="mdo" width="45" height="45" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                    <li><a class="dropdown-item" href="/login">Iniciar sesión</a></li>
-                    <li><a class="dropdown-item" href="/register">Registrarse</a></li>
+                    <li><a class="dropdown-item" href="/login" sec:authorize="!isAuthenticated()">Iniciar sesión</a></li>
+                    <li><a class="dropdown-item" href="/ajustes" sec:authorize="isAuthenticated()">Ajustes</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
+                    <li><a class="dropdown-item" href="/register" sec:authorize="!isAuthenticated()">Registrarse</a></li>
                     <li>
                         <form th:action="@{/logout}" method="post">
-                            <input class="dropdown-item" type="submit" value="Cerrar sesión"/>
+                            <input class="dropdown-item" type="submit" value="Cerrar sesión" sec:authorize="isAuthenticated()"/>
                         </form>
                     </li>
                 </ul>

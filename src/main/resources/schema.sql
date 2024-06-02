@@ -59,12 +59,12 @@ FROM seccion s
          JOIN tipo t ON st.id_tipo = t.id;
 
 CREATE OR REPLACE VIEW vista_comentarios AS
-SELECT c.id AS id, c.comentario AS comentario, c.fecha_comentario AS fecha_comentario, c.id_cliente AS id_cliente, cl.nick AS nick, c.id_post AS id_post
+SELECT c.id AS id, c.comentario AS comentario, c.fecha_comentario AS fecha_comentario, c.id_cliente AS id_cliente, cl.nick AS nick, cl.avatar AS avatar, c.id_post AS id_post
 FROM comentario c
          JOIN cliente cl ON c.id_cliente = cl.id;
 
 CREATE OR REPLACE VIEW vista_post_cliente AS
-SELECT p.id AS id_post, p.titulo AS titulo, c.id AS id_cliente, c.nick AS nick, t.texto AS descripcion
+SELECT p.id AS id_post, p.titulo AS titulo, c.id AS id_cliente, c.nick AS nick, c.avatar AS avatar, t.texto AS descripcion
 FROM post p
          JOIN cliente c ON p.id_cliente = c.id
          JOIN seccion s ON p.id = s.id_post

@@ -69,7 +69,7 @@ public class ClienteService implements UserDetailsService {
 
         public void actualizarCliente(Cliente clienteSeleccionado) throws SQLException {
             Statement consulta = MYSQL.connect().createStatement();
-            String sql = "UPDATE cliente SET nombre = '" + clienteSeleccionado.getNombre() + "', apellido1 = '" + clienteSeleccionado.getApellido1()+ "', apellido2 = '" + clienteSeleccionado.getApellido2() + "', telefono = '" + clienteSeleccionado.getTelefono() + "', email = '" + clienteSeleccionado.getEmail() + "' WHERE id = " + clienteSeleccionado.getId();
+            String sql = "UPDATE cliente SET avatar = '" + clienteSeleccionado.getAvatar() + "', nombre = '" + clienteSeleccionado.getNombre() + "', apellido1 = '" + clienteSeleccionado.getApellido1()+ "', apellido2 = '" + clienteSeleccionado.getApellido2() + "', telefono = '" + clienteSeleccionado.getTelefono() + "', email = '" + clienteSeleccionado.getEmail() + "' WHERE id = " + clienteSeleccionado.getId();
 
             consulta.executeUpdate(sql);
             consulta.close();

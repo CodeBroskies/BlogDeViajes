@@ -36,6 +36,16 @@ public class Cliente implements UserDetails {
         this.telefono = telefono;
     }
 
+    public Cliente(int id, String avatar, String nombre, String apellido1, String apellido2, String email, String telefono) {
+        this.id = id;
+        this.avatar = avatar;
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.email = email;
+        this.telefono = telefono;
+    }
+
     public Cliente(int id, String nick, String password) {
         this.id = id;
         this.nick = nick;

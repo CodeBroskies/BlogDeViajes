@@ -48,7 +48,8 @@ public class ComentarioService {
                     resultSet.getDate("fecha_comentario"),
                     resultSet.getInt("id_cliente"),
                     resultSet.getInt("id_post"),
-                    resultSet.getString("nick")
+                    resultSet.getString("nick"),
+                    resultSet.getString("avatar")
             );
             comentarios.add(comentario);
         }

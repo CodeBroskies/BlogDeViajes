@@ -51,7 +51,7 @@ public class PostController {
         return "postModificar";
     }
 
-    @PostMapping("/actualizar")
+    @PutMapping("/actualizar")
     public String actualizar(@ModelAttribute Post post, Model model) throws SQLException {
         postService.actualizarPost(post);
         model.addAttribute("posts", postService.listarPosts());

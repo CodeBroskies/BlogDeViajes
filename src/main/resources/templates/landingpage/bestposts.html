@@ -4,7 +4,7 @@
         <div class="d-flex flex-row gap-5">
             <div class="col card my-3 p-0" th:each="post : ${lastPosts}">
                 <h5 class="card-header d-flex align-items-center">
-                    <img src="/images/iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">
+                    <img th:src="(${post.avatar} == 'null') ? '/images/iconoUsuario.jpg' : ${post.avatar}" alt="mdo" width="45" height="45" class="p-1 rounded-circle">
                     <div class="ms-2">
                         <p class="username m-0" th:text="'@' + ${post.username}"></p>
                         <h5 class="m-0" th:text="${post.titulo}"></h5>

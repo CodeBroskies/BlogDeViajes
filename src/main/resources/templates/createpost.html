@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,7 +37,7 @@
                 </div>
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-2">
-                        <img src="/images/iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">
+                        <img th:src="(${usuario.avatar} == null) ? '/images/iconoUsuario.jpg' : ${usuario.avatar}" alt="mdo" width="55" height="55" class="rounded-circle">
                         <div th:text="${username}"></div>
                     </div>
                     Título Publicación

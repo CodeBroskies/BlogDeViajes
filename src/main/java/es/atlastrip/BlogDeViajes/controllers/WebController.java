@@ -1,9 +1,9 @@
 package es.atlastrip.BlogDeViajes.controllers;
 
+import es.atlastrip.BlogDeViajes.models.Cliente;
 import es.atlastrip.BlogDeViajes.models.Comentario;
 import es.atlastrip.BlogDeViajes.models.Post;
 import es.atlastrip.BlogDeViajes.models.Seccion;
-import es.atlastrip.BlogDeViajes.models.Tipo;
 import es.atlastrip.BlogDeViajes.services.ClienteService;
 import es.atlastrip.BlogDeViajes.services.ComentarioService;
 import es.atlastrip.BlogDeViajes.services.PostService;
@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
@@ -24,13 +26,14 @@ public class WebController {
     PostService service = new PostService();
 
     @GetMapping("/")
-    public String index(Model model) throws SQLException {
+    public String index(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
         model.addAttribute("lastPosts", service.listarLastPostsVista());
+        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
         return "index";
     }
 
     @GetMapping("/post")
-    public String posts(@RequestParam(value = "busqueda", required = false) String busqueda, Model model) throws SQLException {
+    public String posts(@AuthenticationPrincipal UserDetails userDetails, @RequestParam(value = "busqueda", required = false) String busqueda, Model model) throws SQLException {
         if (busqueda == null) {
             busqueda = "";
             model.addAttribute("posts", service.listarPostsVista());
@@ -43,6 +46,8 @@ public class WebController {
             }
         }
         model.addAttribute("busqueda", busqueda);
+
+        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
         return "posts";
     }
 
@@ -81,6 +86,22 @@ public class WebController {
         model.addAttribute("comentario", comentario);
 
         return "post";
+    }
+
+    @GetMapping("/ajustes")
+    public String settings(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
+        model.addAttribute("cliente", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        return "settings";
+    }
+
+    @PostMapping("/actualizarAjustes")
+    public String actualizarAjustes(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute Cliente cliente, Model model) throws SQLException {
+        System.out.println(cliente.getId());
+        new ClienteService().actualizarCliente(cliente);
+        model.addAttribute("cliente", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        return "settings";
     }
 
     @GetMapping("/admin/dashboard")

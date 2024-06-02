@@ -43,6 +43,7 @@ public class PostService {
                     resultSet.getString("titulo"),
                     resultSet.getInt("id_cliente"),
                     resultSet.getString("nick"),
+                    resultSet.getString("avatar"),
                     resultSet.getString("descripcion")
             );
             posts.add(post);
@@ -61,6 +62,7 @@ public class PostService {
                     resultSet.getString("titulo"),
                     resultSet.getInt("id_cliente"),
                     resultSet.getString("nick"),
+                    resultSet.getString("avatar"),
                     resultSet.getString("descripcion")
             );
             posts.add(post);
@@ -79,6 +81,7 @@ public class PostService {
                     resultSet.getString("titulo"),
                     resultSet.getInt("id_cliente"),
                     resultSet.getString("nick"),
+                    resultSet.getString("avatar"),
                     resultSet.getString("descripcion")
             );
             posts.add(post);

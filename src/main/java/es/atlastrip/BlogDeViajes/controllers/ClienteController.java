@@ -37,7 +37,7 @@ public class ClienteController {
             return "clienteModificar";
         }
 
-        @PostMapping("/actualizar")
+        @PutMapping("/actualizar")
         public String actualizar(@ModelAttribute Cliente cliente, Model model) throws SQLException {
             service.actualizarCliente(cliente);
             model.addAttribute("clientes", service.listarClientes());

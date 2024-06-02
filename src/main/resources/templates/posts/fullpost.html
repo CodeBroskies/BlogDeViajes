@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-center">
         <div class="card py-4 px-5 m-2" style="width: 64rem;">
             <h5 class="d-flex align-items-center">
-                <img src="/images/iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">
+                <img th:src="(${usuario.avatar} == 'null') ? '/images/iconoUsuario.jpg' : ${usuario.avatar}" alt="mdo" width="45" height="45" class="rounded-circle">
                 <p class="username m-0 fs-6" th:text="'@' + ${usuario.nick}"></p>
             </h5>
             <h1 class="m-0 fs-2" th:text="${post.titulo}"></h1>
@@ -33,7 +33,7 @@
             </div>
             <div class="card p-3 mb-2" th:each="comentario : ${comentarios}">
                 <div class="d-flex align-items-center">
-                    <img src="/images/iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">
+                    <img th:src="(${usuario.avatar} == 'null') ? '/images/iconoUsuario.jpg' : ${usuario.avatar}" alt="mdo" width="40" height="40" class="rounded-circle">
                     <p class="username m-0" th:text="'@' + ${comentario.username}"></p>
                 </div>
                 <p class="m-0" th:text="${comentario.comentario}"></p>
