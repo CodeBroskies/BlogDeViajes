@@ -71,9 +71,11 @@ public class PostController {
         int nuevoPostId = postService.crearPost(post);
         for (Seccion seccion : post.getSecciones()) {
             seccion.setId_post(nuevoPostId);
-            int nuevaSeccionId = seccionService.crearSeccion(seccion);
-            int nuevoTipoId = tipoService.crearTipo(new Tipo("Contenido", seccion.getContenido(), seccion.getUrl_image()));
-            tipoService.crearTipoSeccion(nuevaSeccionId, nuevoTipoId);
+            if (!seccion.getContenido().isEmpty() && seccion.getUrl_image() != null) {
+                int nuevaSeccionId = seccionService.crearSeccion(seccion);
+                int nuevoTipoId = tipoService.crearTipo(new Tipo("Contenido", seccion.getContenido(), seccion.getUrl_image()));
+                tipoService.crearTipoSeccion(nuevaSeccionId, nuevoTipoId);
+            }
         }
         model.addAttribute("posts", postService.listarPostsVista());
         return "redirect:/post";

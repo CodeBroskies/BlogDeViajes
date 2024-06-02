@@ -3,7 +3,7 @@
         <div class="card py-4 px-5 m-2" style="width: 64rem;">
             <h5 class="d-flex align-items-center">
                 <img th:src="(${usuario.avatar} == 'null') ? '/images/iconoUsuario.jpg' : ${usuario.avatar}" alt="mdo" width="45" height="45" class="rounded-circle">
-                <p class="username m-0 fs-6" th:text="'@' + ${usuario.nick}"></p>
+                <p class="username m-0 fs-6 ms-2" th:text="'@' + ${usuario.nick}"></p>
             </h5>
             <h1 class="m-0 fs-2" th:text="${post.titulo}"></h1>
             <hr>
@@ -12,7 +12,7 @@
                 <div class="d-flex flex-row">
                     <p th:text="${seccion.contenido}">
                     </p>
-                    <img th:if="${seccion.url_image == null}" th:src="${seccion.url_image}" class="p-3" style="max-width: 32rem;">
+                    <img th:if="${seccion.url_image != 'null'}" th:src="${seccion.url_image}" class="p-3" style="max-width: 32rem;">
                 </div>
             </div>
         </div>

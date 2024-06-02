@@ -52,7 +52,7 @@ public class WebController {
     }
 
     @GetMapping("/crearpost")
-    public String crearpost(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    public String crearpost(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
         if (userDetails == null) {
             return "redirect:/login";
         }
@@ -65,6 +65,8 @@ public class WebController {
 
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("post", nuevoPost);
+
+        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
         return "createpost";
     }
 
