@@ -32,7 +32,7 @@ public class WebController {
         return "index";
     }
 
-    @GetMapping("/post")
+    @GetMapping("/posts")
     public String posts(@AuthenticationPrincipal UserDetails userDetails, @RequestParam(value = "busqueda", required = false) String busqueda, Model model) throws SQLException {
         if (busqueda == null) {
             busqueda = "";

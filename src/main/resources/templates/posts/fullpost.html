@@ -34,7 +34,7 @@
             <div class="card p-3 mb-2" th:each="comentario : ${comentarios}">
                 <div class="d-flex align-items-center">
                     <img th:src="(${usuario.avatar} == 'null') ? '/images/iconoUsuario.jpg' : ${usuario.avatar}" alt="mdo" width="40" height="40" class="rounded-circle">
-                    <p class="username m-0" th:text="'@' + ${comentario.username}"></p>
+                    <p class="username m-0 ms-1" th:text="'@' + ${comentario.username}"></p>
                 </div>
                 <p class="m-0" th:text="${comentario.comentario}"></p>
             </div>
