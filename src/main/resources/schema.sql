@@ -52,6 +52,19 @@ CREATE TABLE seccion_tipo (
       FOREIGN KEY (id_tipo) REFERENCES tipo(id) ON DELETE CASCADE
 );
 
+CREATE TABLE roles (
+   id INT AUTO_INCREMENT PRIMARY KEY,
+   name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE user_roles (
+    user_id INT,
+    role_id INT,
+    FOREIGN KEY (user_id) REFERENCES cliente(id),
+    FOREIGN KEY (role_id) REFERENCES roles(id),
+    PRIMARY KEY (user_id, role_id)
+);
+
 CREATE OR REPLACE VIEW seccion_contenido AS
 SELECT s.id AS id_seccion, s.titulo AS titulo_seccion, s.id_post AS id_post, t.texto AS contenido, t.url_imagen AS url_imagen
 FROM seccion s
