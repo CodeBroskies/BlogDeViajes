@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/posts")
@@ -84,16 +85,36 @@ public class PostController {
     @PostMapping("/editar")
     public String editar(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute("post") Post post, Model model) throws SQLException {
         if (new ClienteService().obtenerCliente(userDetails.getUsername()).getId() == post.getId_cliente()) {
-            for (Seccion seccion : post.getSecciones()) {
-                seccion.setId_post(post.getId());
-                if (!seccion.getContenido().isEmpty() && seccion.getUrl_image() != null) {
-                    int nuevaSeccionId = seccionService.crearSeccion(seccion);
-                    int nuevoTipoId = tipoService.crearTipo(new Tipo("Contenido", seccion.getContenido(), seccion.getUrl_image()));
-                    tipoService.crearTipoSeccion(nuevaSeccionId, nuevoTipoId);
-                }
+            postService.actualizarPost(post);
+            List<Seccion> oldSecciones = seccionService.listarSeccionesPorPost(post.getId());
+            List<Seccion> newSecciones = post.getSecciones();
+
+            for (int i = 0; i < oldSecciones.size(); i++) {
+                Seccion newSeccion = newSecciones.get(i);
+                newSeccion.setId(oldSecciones.get(i).getId());
+                newSeccion.setId_post(oldSecciones.get(i).getId_post());
+                seccionService.actualizarSeccion(newSeccion);
+
+                Tipo oldTipo = tipoService.obtenerTipoPorSeccion(newSeccion.getId());
+
+                tipoService.actualizarTipo(new Tipo(oldTipo.getId(), "Contenido", newSeccion.getContenido(), (newSeccion.getUrl_image().equals("Url Imagen")) ? "null" : newSeccion.getUrl_image()));
             }
         }
+
         model.addAttribute("posts", postService.listarPostsVista());
+
+        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
         return "redirect:/verpost?id=" + post.getId();
+    }
+
+    @PostMapping("/borrar")
+    public String borrar(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute("post") Post post, Model model) throws SQLException {
+        if (new ClienteService().obtenerCliente(userDetails.getUsername()).getId() == post.getId_cliente()) {
+            postService.eliminarPost(post.getId());
+            model.addAttribute("posts", postService.listarPosts());
+            return "redirect:/posts";
+        } else {
+            return "redirect:/verpost?id=" + post.getId();
+        }
     }
 }

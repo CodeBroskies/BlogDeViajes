@@ -18,14 +18,14 @@ CREATE TABLE post (
       id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
       titulo VARCHAR(64),
       id_cliente INT UNSIGNED NOT NULL,
-      FOREIGN KEY (id_cliente) REFERENCES cliente(id)
+      FOREIGN KEY (id_cliente) REFERENCES cliente(id) ON DELETE CASCADE
 );
 
 CREATE TABLE seccion (
      id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
      titulo VARCHAR(30) NOT NULL,
      id_post INT UNSIGNED NOT NULL,
-     FOREIGN KEY (id_post) REFERENCES post(id)
+     FOREIGN KEY (id_post) REFERENCES post(id) ON DELETE CASCADE
 );
 
 CREATE TABLE comentario (
@@ -34,8 +34,8 @@ CREATE TABLE comentario (
     fecha_comentario DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     id_cliente INT UNSIGNED NOT NULL,
     id_post INT UNSIGNED NOT NULL,
-    FOREIGN KEY (id_cliente) REFERENCES cliente(id),
-    FOREIGN KEY (id_post) REFERENCES post(id)
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_post) REFERENCES post(id) ON DELETE CASCADE
 );
 
 CREATE TABLE tipo (
@@ -48,8 +48,8 @@ CREATE TABLE tipo (
 CREATE TABLE seccion_tipo (
       id_seccion INT UNSIGNED NOT NULL,
       id_tipo INT UNSIGNED NOT NULL,
-      FOREIGN KEY (id_seccion) REFERENCES seccion(id),
-      FOREIGN KEY (id_tipo) REFERENCES tipo(id)
+      FOREIGN KEY (id_seccion) REFERENCES seccion(id) ON DELETE CASCADE,
+      FOREIGN KEY (id_tipo) REFERENCES tipo(id) ON DELETE CASCADE
 );
 
 CREATE OR REPLACE VIEW seccion_contenido AS

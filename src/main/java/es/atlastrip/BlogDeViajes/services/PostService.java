@@ -126,7 +126,7 @@ public class PostService {
 
     public void actualizarPost(Post postSeleccionado) throws SQLException {
         Statement consulta = MYSQL.connect().createStatement();
-        String sql = "UPDATE post SET id = '" + postSeleccionado.getId() + "', titulo = '"  + "' WHERE id = " + postSeleccionado.getId();
+        String sql = "UPDATE post SET id = '" + postSeleccionado.getId() + "', titulo = '" + postSeleccionado.getTitulo()  + "' WHERE id = " + postSeleccionado.getId();
 
         consulta.executeUpdate(sql);
         consulta.close();
