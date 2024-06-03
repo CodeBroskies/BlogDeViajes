@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TipoService {
 
-    ConnectionMySql MYSQL = new ConnectionMySql();
+    ConnectionMySql MYSQL = ConnectionMySql.getInstance();
 
     public ArrayList<Tipo> listarTipos() throws SQLException {
         ArrayList<Tipo> tipos = new ArrayList<>();
@@ -26,7 +26,7 @@ public class TipoService {
                     resultSet.getInt("id"),
                     resultSet.getString("nombre"),
                     resultSet.getString("texto"),
-                    resultSet.getString("urlImagen"),
+                    resultSet.getString("url_imagen"),
                     resultSet.getInt("seccion_id")
             );
 
@@ -67,7 +67,7 @@ public class TipoService {
 
     public void actualizarTipo(Tipo tipoSeleccionado) throws SQLException {
         Statement consulta = MYSQL.connect().createStatement();
-        String sql = "UPDATE tipo SET nombre = '" + tipoSeleccionado.getNombre() + "', texto = '" + tipoSeleccionado.getTexto()+ "', urlImagen = '" + tipoSeleccionado.getUrlImagen() + "' WHERE id = " + tipoSeleccionado.getId();
+        String sql = "UPDATE tipo SET nombre = '" + tipoSeleccionado.getNombre() + "', texto = '" + tipoSeleccionado.getTexto()+ "', url_imagen = '" + tipoSeleccionado.getUrlImagen() + "' WHERE id = " + tipoSeleccionado.getId();
 
         consulta.executeUpdate(sql);
         consulta.close();
@@ -82,7 +82,23 @@ public class TipoService {
                     resultSet.getInt("id"),
                     resultSet.getString("nombre"),
                     resultSet.getString("texto"),
-                    resultSet.getString("urlImagen")
+                    resultSet.getString("url_imagen")
+            );
+            return tipo;
+        }
+        return null;
+    }
+
+    public Tipo obtenerTipoPorSeccion(int id_seccion) throws SQLException {
+        String sql = "SELECT * FROM tipo JOIN seccion_tipo ON tipo.id = seccion_tipo.id_tipo JOIN seccion ON seccion_tipo.id_seccion = seccion.id WHERE seccion.id = " + id_seccion;
+        Statement consulta = MYSQL.connect().createStatement();
+        ResultSet resultSet = consulta.executeQuery(sql);
+        if (resultSet.next()) {
+            Tipo tipo = new Tipo(
+                    resultSet.getInt("id"),
+                    resultSet.getString("nombre"),
+                    resultSet.getString("texto"),
+                    resultSet.getString("url_imagen")
             );
             return tipo;
         }

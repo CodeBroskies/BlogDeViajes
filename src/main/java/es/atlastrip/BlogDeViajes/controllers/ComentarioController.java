@@ -39,7 +39,7 @@ public class ComentarioController {
         return "comentarioModificar";
     }
 
-    @PostMapping("/actualizar")
+    @PutMapping("/actualizar")
     public String actualizar(@ModelAttribute Comentario comentario, Model model) throws SQLException {
         service.actualizarComentario(comentario);
         model.addAttribute("comentarios", service.listarComentarios());
@@ -50,7 +50,7 @@ public class ComentarioController {
     public String agregar(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute Comentario comentario, Model model) throws SQLException {
         service.crearComentario(userDetails, comentario);
         model.addAttribute("comentarios", service.listarComentarios());
-        return "redirect:/comentarios/listar";
+        return "redirect:/verpost?id=" + comentario.getId_post();
     }
 
 }

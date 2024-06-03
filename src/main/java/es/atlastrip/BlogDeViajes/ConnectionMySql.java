@@ -4,12 +4,23 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionMySql {
-    String url = "jdbc:mysql://localhost:3306/blogdeviajes";
-    String user = "root";
-    String pass = "";
+
+    private static final ConnectionMySql INSTANCE = new ConnectionMySql();
+
+    private ConnectionMySql() {
+
+    }
+
+    public static ConnectionMySql getInstance() {
+        return INSTANCE;
+    }
+
+    private final String URL = "jdbc:mysql://localhost:3306/blogdeviajes";
+    private final String USER = "root";
+    private final String PASS = "";
 
 
     public Connection connect() throws SQLException {
-        return DriverManager.getConnection(url, user, pass);
+        return DriverManager.getConnection(URL, USER, PASS);
     }
 }

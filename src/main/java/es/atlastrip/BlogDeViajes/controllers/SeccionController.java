@@ -37,7 +37,7 @@ public class SeccionController {
         return "seccionModificar";
     }
 
-    @PostMapping("/actualizar")
+    @PutMapping("/actualizar")
     public String actualizar(@ModelAttribute Seccion seccion, Model model) throws SQLException {
         service.actualizarSeccion(seccion);
         model.addAttribute("seccions", service.listarSecciones());

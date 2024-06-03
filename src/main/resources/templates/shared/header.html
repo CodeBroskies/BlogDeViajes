@@ -2,32 +2,33 @@
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-                <img src="LogoAvion.png" width="65" height="65" role="img" aria-label="Bootstrap">
+                <img src="/images/LogoAvion.png" width="65" height="65" role="img" aria-label="Bootstrap">
             </a>
             <div class="vr ms-2 me-2"></div>
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="/" class="nav-link px-2 link-dark">Inicio</a></li>
-                <li><a href="/post" class="nav-link px-2 link-dark">Blog</a></li>
+                <li><a href="/posts" class="nav-link px-2 link-dark">Blog</a></li>
             </ul>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="search" class="form-control" placeholder="Buscar..." aria-label="Search">
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" th:action="@{./post}" method="get">
+                <input type="search" class="form-control" id="busqueda" name="busqueda" placeholder="Buscar" th:value="${busqueda}" required>
             </form>
 
             <div class="dropdown text-end">
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">
+                    <img th:src="(${usuario.avatar} == 'null') ? '/images/iconoUsuario.jpg' : ${usuario.avatar}" alt="mdo" width="45" height="45" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                    <li><a class="dropdown-item" href="/login">Iniciar sesión</a></li>
-                    <li><a class="dropdown-item" href="/register">Registrarse</a></li>
+                    <li><a class="dropdown-item" href="/login" sec:authorize="!isAuthenticated()">Iniciar sesión</a></li>
+                    <li><a class="dropdown-item" href="/ajustes" sec:authorize="isAuthenticated()">Ajustes</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
+                    <li><a class="dropdown-item" href="/register" sec:authorize="!isAuthenticated()">Registrarse</a></li>
                     <li>
                         <form th:action="@{/logout}" method="post">
-                            <input class="dropdown-item" type="submit" value="Cerrar sesión"/>
+                            <input class="dropdown-item" type="submit" value="Cerrar sesión" sec:authorize="isAuthenticated()"/>
                         </form>
                     </li>
                 </ul>
