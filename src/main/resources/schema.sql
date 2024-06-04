@@ -53,16 +53,15 @@ CREATE TABLE seccion_tipo (
 );
 
 CREATE TABLE roles (
-   id INT AUTO_INCREMENT PRIMARY KEY,
+   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
    name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE user_roles (
-    user_id INT,
-    role_id INT,
-    FOREIGN KEY (user_id) REFERENCES cliente(id),
-    FOREIGN KEY (role_id) REFERENCES roles(id),
-    PRIMARY KEY (user_id, role_id)
+    user_id INT UNSIGNED NOT NULL,
+    role_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES cliente(id) ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
 
 CREATE OR REPLACE VIEW seccion_contenido AS
