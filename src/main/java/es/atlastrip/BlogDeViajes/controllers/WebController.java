@@ -7,7 +7,6 @@ import es.atlastrip.BlogDeViajes.models.Seccion;
 import es.atlastrip.BlogDeViajes.services.ClienteService;
 import es.atlastrip.BlogDeViajes.services.ComentarioService;
 import es.atlastrip.BlogDeViajes.services.PostService;
-import es.atlastrip.BlogDeViajes.services.SeccionService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
