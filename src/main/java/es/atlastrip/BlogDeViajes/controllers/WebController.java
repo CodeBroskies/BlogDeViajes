@@ -119,8 +119,39 @@ public class WebController {
     }
 
     @GetMapping("/admin/dashboard")
-    public String dashboard() {
+    public String dashboard(Model model) {
+        model.addAttribute("url", "dashboard");
         return "/admin/dashboard";
+    }
+
+    @GetMapping("/admin/clientes")
+    public String tablaClientes(Model model) {
+        model.addAttribute("url", "clientestabla");
+        return "/admin/clientestabla";
+    }
+
+    @GetMapping("/admin/comentarios")
+    public String tablaComentarios(Model model) {
+        model.addAttribute("url", "comentariostabla");
+        return "/admin/comentariostabla";
+    }
+
+    @GetMapping("/admin/posts")
+    public String tablaPosts(Model model) {
+        model.addAttribute("url", "poststabla");
+        return "/admin/poststabla";
+    }
+
+    @GetMapping("/admin/secciones")
+    public String tablaSecciones(Model model) {
+        model.addAttribute("url", "seccionestabla");
+        return "/admin/seccionestabla";
+    }
+
+    @GetMapping("/admin/tipos")
+    public String tablaTipos(Model model) {
+        model.addAttribute("url", "tipostabla");
+        return "/admin/tipostabla";
     }
 
 }
