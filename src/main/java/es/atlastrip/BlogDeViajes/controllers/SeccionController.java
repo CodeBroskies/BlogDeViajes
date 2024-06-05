@@ -18,8 +18,7 @@ public class SeccionController {
     @GetMapping("/listar")
     public String listar(@RequestParam Model model) throws SQLException {
         String busqueda = "";
-        ArrayList<Seccion> seccions = service.listarSeccions();
-        model.addAttribute("seccions", service.listarSeccions());
+        model.addAttribute("seccions", service.listarSecciones());
         model.addAttribute("seccion", new Seccion());
         model.addAttribute("busqueda", busqueda);
         return "seccions";
@@ -28,8 +27,8 @@ public class SeccionController {
     @GetMapping("/eliminar")
     public String eliminar(@RequestParam("id") int id, Model model) throws SQLException {
         service.eliminarSeccion(id);
-        model.addAttribute("seccions", service.listarSeccions());
-        return "redirect:/seccions/listar?pagina=1";
+        model.addAttribute("seccions", service.listarSecciones());
+        return "redirect:/seccions/listar";
     }
 
     @GetMapping("/modificar")
@@ -38,17 +37,17 @@ public class SeccionController {
         return "seccionModificar";
     }
 
-    @PostMapping("/actualizar")
+    @PutMapping("/actualizar")
     public String actualizar(@ModelAttribute Seccion seccion, Model model) throws SQLException {
         service.actualizarSeccion(seccion);
-        model.addAttribute("seccions", service.listarSeccions());
-        return "redirect:/seccions/listar?pagina=1";
+        model.addAttribute("seccions", service.listarSecciones());
+        return "redirect:/seccions/listar";
     }
 
     @PostMapping("/agregar")
     public String agregar(@ModelAttribute Seccion seccion, Model model) throws SQLException {
         service.crearSeccion(seccion);
-        model.addAttribute("seccions", service.listarSeccions());
-        return "redirect:/seccions/listar?pagina=1";
+        model.addAttribute("seccions", service.listarSecciones());
+        return "redirect:/seccions/listar";
     }
 }
