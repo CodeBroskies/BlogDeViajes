@@ -13,11 +13,28 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SeccionService {
-    ConnectionMySql MYSQL = new ConnectionMySql();
+
+    ConnectionMySql MYSQL = ConnectionMySql.getInstance();
 
     public ArrayList<Seccion> listarSecciones() throws SQLException {
         ArrayList<Seccion> secciones = new ArrayList<>();
         String sql = "SELECT * FROM seccion";
+        Statement consulta = MYSQL.connect().createStatement();
+        ResultSet resultSet = consulta.executeQuery(sql);
+        while (resultSet.next()) {
+            Seccion seccion = new Seccion(
+                    resultSet.getInt("id"),
+                    resultSet.getString("titulo"),
+                    resultSet.getInt("id_post")
+            );
+            secciones.add(seccion);
+        }
+        return secciones;
+    }
+
+    public ArrayList<Seccion> listarSeccionesPorPost(int id_post) throws SQLException {
+        ArrayList<Seccion> secciones = new ArrayList<>();
+        String sql = "SELECT * FROM seccion WHERE id_post = " + id_post;
         Statement consulta = MYSQL.connect().createStatement();
         ResultSet resultSet = consulta.executeQuery(sql);
         while (resultSet.next()) {

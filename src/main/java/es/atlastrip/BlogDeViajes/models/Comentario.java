@@ -9,6 +9,7 @@ public class Comentario {
     private int id_cliente;
     private int id_post;
     private String username;
+    private String avatar;
 
     public Comentario(int id, String comentario, Date fecha_comentario, int id_post, int id_cliente) {
         this.id = id;
@@ -18,13 +19,14 @@ public class Comentario {
         this.id_cliente = id_cliente;
     }
 
-    public Comentario(int id, String comentario, Date fecha_comentario, int id_post, int id_cliente, String username) {
+    public Comentario(int id, String comentario, Date fecha_comentario, int id_post, int id_cliente, String username, String avatar) {
         this.id = id;
         this.comentario = comentario;
         this.fecha_comentario = fecha_comentario;
         this.id_post = id_post;
         this.id_cliente = id_cliente;
         this.username = username;
+        this.avatar = avatar;
     }
 
     public Comentario() {
@@ -77,5 +79,13 @@ public class Comentario {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

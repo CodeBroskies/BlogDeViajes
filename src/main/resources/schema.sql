@@ -18,14 +18,14 @@ CREATE TABLE post (
       id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
       titulo VARCHAR(64),
       id_cliente INT UNSIGNED NOT NULL,
-      FOREIGN KEY (id_cliente) REFERENCES cliente(id)
+      FOREIGN KEY (id_cliente) REFERENCES cliente(id) ON DELETE CASCADE
 );
 
 CREATE TABLE seccion (
      id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
      titulo VARCHAR(30) NOT NULL,
      id_post INT UNSIGNED NOT NULL,
-     FOREIGN KEY (id_post) REFERENCES post(id)
+     FOREIGN KEY (id_post) REFERENCES post(id) ON DELETE CASCADE
 );
 
 CREATE TABLE comentario (
@@ -34,8 +34,8 @@ CREATE TABLE comentario (
     fecha_comentario DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     id_cliente INT UNSIGNED NOT NULL,
     id_post INT UNSIGNED NOT NULL,
-    FOREIGN KEY (id_cliente) REFERENCES cliente(id),
-    FOREIGN KEY (id_post) REFERENCES post(id)
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_post) REFERENCES post(id) ON DELETE CASCADE
 );
 
 CREATE TABLE tipo (
@@ -48,8 +48,20 @@ CREATE TABLE tipo (
 CREATE TABLE seccion_tipo (
       id_seccion INT UNSIGNED NOT NULL,
       id_tipo INT UNSIGNED NOT NULL,
-      FOREIGN KEY (id_seccion) REFERENCES seccion(id),
-      FOREIGN KEY (id_tipo) REFERENCES tipo(id)
+      FOREIGN KEY (id_seccion) REFERENCES seccion(id) ON DELETE CASCADE,
+      FOREIGN KEY (id_tipo) REFERENCES tipo(id) ON DELETE CASCADE
+);
+
+CREATE TABLE roles (
+   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+   name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE user_roles (
+    user_id INT UNSIGNED NOT NULL,
+    role_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES cliente(id) ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
 
 CREATE OR REPLACE VIEW seccion_contenido AS
@@ -59,12 +71,12 @@ FROM seccion s
          JOIN tipo t ON st.id_tipo = t.id;
 
 CREATE OR REPLACE VIEW vista_comentarios AS
-SELECT c.id AS id, c.comentario AS comentario, c.fecha_comentario AS fecha_comentario, c.id_cliente AS id_cliente, cl.nick AS nick, c.id_post AS id_post
+SELECT c.id AS id, c.comentario AS comentario, c.fecha_comentario AS fecha_comentario, c.id_cliente AS id_cliente, cl.nick AS nick, cl.avatar AS avatar, c.id_post AS id_post
 FROM comentario c
          JOIN cliente cl ON c.id_cliente = cl.id;
 
 CREATE OR REPLACE VIEW vista_post_cliente AS
-SELECT p.id AS id_post, p.titulo AS titulo, c.id AS id_cliente, c.nick AS nick, t.texto AS descripcion
+SELECT p.id AS id_post, p.titulo AS titulo, c.id AS id_cliente, c.nick AS nick, c.avatar AS avatar, t.texto AS descripcion
 FROM post p
          JOIN cliente c ON p.id_cliente = c.id
          JOIN seccion s ON p.id = s.id_post

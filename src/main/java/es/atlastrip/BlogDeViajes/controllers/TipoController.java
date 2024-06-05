@@ -37,7 +37,7 @@ public class TipoController {
         return "tipoModificar";
     }
 
-    @PostMapping("/actualizar")
+    @PutMapping("/actualizar")
     public String actualizar(@ModelAttribute Tipo tipo, Model model) throws SQLException {
         service.actualizarTipo(tipo);
         model.addAttribute("tipos", service.listarTipos());

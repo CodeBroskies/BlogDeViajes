@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ComentarioService {
 
-    ConnectionMySql MYSQL = new ConnectionMySql();
+    ConnectionMySql MYSQL = ConnectionMySql.getInstance();
 
     public ArrayList<Comentario> listarComentarios() throws SQLException {
         ArrayList<Comentario> comentarios = new ArrayList<>();
@@ -48,7 +48,8 @@ public class ComentarioService {
                     resultSet.getDate("fecha_comentario"),
                     resultSet.getInt("id_cliente"),
                     resultSet.getInt("id_post"),
-                    resultSet.getString("nick")
+                    resultSet.getString("nick"),
+                    resultSet.getString("avatar")
             );
             comentarios.add(comentario);
         }

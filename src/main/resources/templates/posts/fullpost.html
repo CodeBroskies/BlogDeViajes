@@ -2,17 +2,22 @@
     <div class="d-flex justify-content-center">
         <div class="card py-4 px-5 m-2" style="width: 64rem;">
             <h5 class="d-flex align-items-center">
-                <img src="iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">
-                <p class="username m-0 fs-6" th:text="'@' + ${usuario.nick}"></p>
+                <img th:src="(${creador.avatar} == 'null') ? '/images/iconoUsuario.jpg' : ${creador.avatar}" alt="mdo" width="45" height="45" class="rounded-circle">
+                <p class="username m-0 fs-6 ms-2" th:text="'@' + ${creador.nick}"></p>
+                <button th:if="${creador.id} == ${usuario.id}" class="btn btn-secondary ms-3" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi bi-pencil-square"></i> Editar post</button>
+                <button th:if="${creador.id} == ${usuario.id}" class="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash-fill"></i> Borrar post</button>
             </h5>
             <h1 class="m-0 fs-2" th:text="${post.titulo}"></h1>
             <hr>
-            <div th:each="seccion : ${secciones}">
+            <div th:each="seccion : ${post.secciones}">
                 <h2 class="fs-4" th:text="${seccion.titulo}"></h2>
-                <div class="d-flex flex-row">
-                    <p th:text="${seccion.contenido}">
-                    </p>
-                    <img th:if="${seccion.url_image == null}" th:src="${seccion.url_image}" class="p-3" style="max-width: 32rem;">
+                <div>
+                    <div th:if="${seccion.url_image == 'null'}" class="d-flex">
+                        <p th:text="${seccion.contenido}" style="max-width: 58rem"></p></div>
+                    <div th:if="${seccion.url_image != 'null'}" class="d-flex">
+                        <p th:text="${seccion.contenido}" style="max-width: 29rem"></p>
+                        <img th:src="${seccion.url_image}" class="p-3" style="max-width: 29rem;">
+                    </div>
                 </div>
             </div>
         </div>
@@ -32,11 +37,71 @@
                 </form>
             </div>
             <div class="card p-3 mb-2" th:each="comentario : ${comentarios}">
-                <div class="d-flex align-items-center">
-                    <img src="iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">
-                    <p class="username m-0" th:text="'@' + ${comentario.username}"></p>
+                <div class="d-flex align-items-center mb-1">
+                    <img th:src="(${comentario.avatar} == 'null') ? '/images/iconoUsuario.jpg' : ${comentario.avatar}" alt="mdo" width="40" height="40" class="rounded-circle">
+                    <p class="username m-0 ms-1" th:text="'@' + ${comentario.username}"></p>
                 </div>
                 <p class="m-0" th:text="${comentario.comentario}"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="editModalCenterTitle">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLongTitle">Editar post</h5>
+                </div>
+                <form th:action="@{/posts/editar}" method="post" th:object="${post}">
+                    <div class="modal-body">
+                        Título Publicación
+                        <input type="hidden" th:field="*{id}"/>
+                        <input type="text" class="form-control mb-2" th:field="*{titulo}">
+                        <input type="hidden" th:field="*{id_cliente}"/>
+                        <div th:each="seccion, iStat : *{secciones}">
+                            <div>
+                                <div class="mt-2" th:text="'Sección ' + (${iStat.index} + 1)">
+                                </div>
+                                <div class="card p-3">
+                                    Título Sección
+                                    <input type="text" class="form-control mb-2" th:field="*{secciones[__${iStat.index}__].titulo}">
+                                    Contenido Sección
+                                    <div class="form-floating mb-2">
+                                        <textarea class="form-control" placeholder="Escribe el contenido aquí" th:field="*{secciones[__${iStat.index}__].contenido}" style="height: 100px"></textarea>
+                                        <label>Texto</label>
+                                    </div>
+                                    <label><i class="bi bi-link me-2"></i>Agregar foto (Opcional)</label>
+                                    <input type="text" class="form-control" placeholder="Url Imagen" th:name="secciones[__${iStat.index}__].url_image" th:id="secciones[__${iStat.index}__].url_image" th:value="(*{secciones[__${iStat.index}__].url_image} == 'null') ? 'Url Imagen' : *{secciones[__${iStat.index}__].url_image}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="deleteModalCenterTitle">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLongTitle">Eliminar post</h5>
+                </div>
+                <form th:action="@{/posts/borrar}" method="post" th:object="${post}">
+                    <input type="hidden" th:field="*{id}"/>
+                    <input type="hidden" th:field="*{id_cliente}"/>
+                    <div class="modal-body">
+                        ¿Seguro quieres eliminar este post?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Eliminar post</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
