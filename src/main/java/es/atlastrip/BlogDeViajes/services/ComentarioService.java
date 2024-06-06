@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -133,20 +134,31 @@ public class ComentarioService {
     }
 
     public List<String> obtenerLabelsParaGrafico() throws SQLException {
-        List<String> labels = new ArrayList<>();
         List<Comentario> comentarios = listarComentarios();
+        List<String> labels = new ArrayList<>();
         for (Comentario comentario : comentarios) {
-            labels.add(comentario.getFecha_comentario().toString()); // Assuming you want date strings as labels
+            String fecha = comentario.getFecha_comentario().toString();
+            if (!labels.contains(fecha)) {
+                labels.add(fecha);
+            }
         }
+        Collections.sort(labels);
         return labels;
     }
 
     public List<Integer> obtenerDataParaGrafico() throws SQLException {
-        List<Integer> data = new ArrayList<>();
         List<Comentario> comentarios = listarComentarios();
+        List<String> labels = obtenerLabelsParaGrafico();
+        List<Integer> data = new ArrayList<>(Collections.nCopies(labels.size(), 0));
+
         for (Comentario comentario : comentarios) {
-            data.add(1);
+            String fecha = comentario.getFecha_comentario().toString();
+            int index = labels.indexOf(fecha);
+            if (index != -1) {
+                data.set(index, data.get(index) + 1);
+            }
         }
+
         return data;
     }
 }
