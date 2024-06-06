@@ -39,26 +39,6 @@ INSERT INTO `seccion` (`id`, `titulo`, `id_post`) VALUES
     (55, 'Día 2: Sintra y Cascais', 40),
     (56, 'Día 3: Porto', 40);
 
-INSERT INTO `seccion_tipo` (`id_seccion`, `id_tipo`) VALUES
-    (29, 6),
-    (30, 7),
-    (31, 8),
-    (38, 15),
-    (39, 16),
-    (40, 17),
-    (44, 21),
-    (45, 22),
-    (46, 23),
-    (48, 25),
-    (49, 26),
-    (50, 27),
-    (51, 28),
-    (52, 29),
-    (53, 30),
-    (54, 31),
-    (55, 32),
-    (56, 33);
-
 INSERT INTO `tipo` (`id`, `nombre`, `texto`, `url_imagen`) VALUES
     (1, 'Galería de fotos', 'Echa un vistazo a las fotos de mi viaje.', 'https://example.com/gallery.jpg'),
     (2, 'Consejos de viaje', 'Descubre algunos consejos útiles para viajar.', 'https://example.com/tips.jpg'),
@@ -93,6 +73,26 @@ INSERT INTO `tipo` (`id`, `nombre`, `texto`, `url_imagen`) VALUES
     (31, 'Contenido', 'Comenzamos explorando el encantador barrio de Alfama en Lisboa, con sus estrechas calles y vistas panorámicas desde el Castillo de San Jorge. Almorzamos en Casa do Alentejo, un restaurante histórico con cocina tradicional portuguesa. Por la tarde, visitamos la emblemática Torre de Belém y probamos los famosos pasteles de nata en Pasteis de Belém. Para la cena, disfrutamos de mariscos frescos en Ramiro.\r\n\r\n', 'https://www.disfrutalisboa.com/f/portugal/lisboa/guia/castillo-san-jorge-m.jpg'),
     (32, 'Contenido', 'Tomamos un día para explorar los encantadores pueblos de Sintra y Cascais. Visitamos el impresionante Palacio Nacional de Sintra y paseamos por los exuberantes jardines del Palacio da Pena. Almorzamos en Apeadeiro, un restaurante acogedor en el centro de Sintra. Por la tarde, nos dirigimos a la costa y disfrutamos de las vistas en el Cabo da Roca, el punto más occidental de Europa. Para la cena, probamos pescado fresco en Mar do Inferno en Cascais.\r\n\r\n', 'https://media.traveler.es/photos/61376c25f130191a954c7911/4:3/w_1764,h_1323,c_limit/141642.jpg'),
     (33, 'Contenido', 'Exploramos la hermosa ciudad de Porto, paseando por el encantador barrio de Ribeira a lo largo del río Duero. Visitamos la famosa Torre dos Clérigos y degustamos vino de Oporto en una de las muchas bodegas del río. Almorzamos en Cantinho do Avillez, un restaurante moderno con cocina portuguesa reinventada. Por la tarde, recorrimos los históricos barrios de Porto y disfrutamos de las vistas desde el Puente Luis I. Para la cena, nos deleitamos con platos tradicionales en DOP.\r\n\r\n', 'https://i.natgeofe.com/n/a418b667-c00b-417d-9ee5-32dfec838a8f/coverstory_portugal_GettyImages-533960357_HR.jpg');
+
+INSERT INTO `seccion_tipo` (`id_seccion`, `id_tipo`) VALUES
+     (29, 6),
+     (30, 7),
+     (31, 8),
+     (38, 15),
+     (39, 16),
+     (40, 17),
+     (44, 21),
+     (45, 22),
+     (46, 23),
+     (48, 25),
+     (49, 26),
+     (50, 27),
+     (51, 28),
+     (52, 29),
+     (53, 30),
+     (54, 31),
+     (55, 32),
+     (56, 33);
 
 INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES
     (1, 1),
