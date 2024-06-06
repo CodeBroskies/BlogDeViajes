@@ -79,7 +79,7 @@ public class PostController {
             }
         }
         model.addAttribute("posts", postService.listarPostsVista());
-        return "redirect:/post";
+        return "redirect:/posts";
     }
 
     @PostMapping("/editar")
