@@ -222,4 +222,15 @@ public class ClienteService implements UserDetailsService {
         }
         return usuarios;
     }
+
+    public int contarClientes() throws SQLException {
+        int count = 0;
+        String sql = "SELECT COUNT(*) AS count FROM cliente";
+        Statement consulta = MYSQL.connect().createStatement();
+        ResultSet resultSet = consulta.executeQuery(sql);
+        if (resultSet.next()) {
+            count = resultSet.getInt("count");
+        }
+        return count;
+    }
 }

@@ -1,7 +1,8 @@
 package es.atlastrip.BlogDeViajes.controllers;
 
 import es.atlastrip.BlogDeViajes.models.Cliente;
-import es.atlastrip.BlogDeViajes.services.ClienteService;
+import es.atlastrip.BlogDeViajes.models.Comentario;
+import es.atlastrip.BlogDeViajes.services.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -18,10 +19,20 @@ import java.util.ArrayList;
 public class AdminController {
 
     ClienteService clienteService = new ClienteService();
+    ComentarioService comentarioService = new ComentarioService();
+    PostService postService = new PostService();
+    SeccionService seccionService = new SeccionService();
+    TipoService tipoService = new TipoService();
 
     @GetMapping("/dashboard")
     public String dashboard(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
         model.addAttribute("url", "dashboard");
+
+        model.addAttribute("clientesTotales", clienteService.contarClientes());
+        model.addAttribute("postsTotales", postService.contarPosts());
+        model.addAttribute("comentariosTotales", comentarioService.contarComentarios());
+        model.addAttribute("labels", comentarioService.obtenerLabelsParaGrafico());
+        model.addAttribute("data", comentarioService.obtenerDataParaGrafico());
 
         model.addAttribute("usuario", clienteService.obtenerCliente(userDetails.getUsername()));
         return "/admin/dashboard";
@@ -74,8 +85,17 @@ public class AdminController {
     }
 
     @GetMapping("/comentarios")
-    public String tablaComentarios(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
+    public String tablaComentarios(@RequestParam(value = "pagina", defaultValue = "1") int pagina, @AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
         model.addAttribute("url", "comentariostabla");
+
+        String busqueda = "";
+        ArrayList<Comentario> comentarios = comentarioService.listarComentarios(pagina);
+        int paginas = ((comentarios.size()%5) == 0) ? comentarios.size()/5 : (comentarios.size() < 5) ? 1 : (comentarios.size()/5 + 1);
+        model.addAttribute("comentarios", comentarioService.listarComentarios(pagina));
+        model.addAttribute("comentario", new Comentario());
+        model.addAttribute("busqueda", busqueda);
+        model.addAttribute("pagina", pagina);
+        model.addAttribute("paginas", paginas);
 
         model.addAttribute("usuario", clienteService.obtenerCliente(userDetails.getUsername()));
         return "/admin/comentariostabla";
