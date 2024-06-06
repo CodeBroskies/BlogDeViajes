@@ -99,7 +99,7 @@ INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES
     (2, 1),
     (2, 2);
 
-INSERT INTO `comentarios` (`id`, `contenido`, `fecha`, `id_cliente`, `id_post`) VALUES
+INSERT INTO `comentarios` (`id`, `comentario`, `fecha`, `id_cliente`, `id_post`) VALUES
     (1, '¡Qué experiencia tan increíble! Me encantaría visitar París algún día.', '2024-01-01', 1, 26),
     (2, 'Gracias por las recomendaciones, definitivamente visitaré esos lugares.', '2024-01-01', 2, 26),
     (3, '¡Las fotos son espectaculares!', '2024-01-01', 3, 26),
