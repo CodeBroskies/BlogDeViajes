@@ -22,6 +22,7 @@
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                     <li><a class="dropdown-item" href="/login" sec:authorize="!isAuthenticated()">Iniciar sesión</a></li>
                     <li><a class="dropdown-item" href="/ajustes" sec:authorize="isAuthenticated()">Ajustes</a></li>
+                    <li><a class="dropdown-item" href="/admin/dashboard" sec:authorize="hasRole('ROLE_ADMIN')">Admin</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>

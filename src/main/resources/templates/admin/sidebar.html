@@ -1,0 +1,61 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" previewlistener="true">
+        <i class="bi bi-database-fill me-2" style="font-size: 2rem;"></i>
+        <span class="fs-4">Admin</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li>
+            <a href="/admin/dashboard" class="nav-link" th:classappend="${(url == 'dashboard') ? 'active' : 'text-white'}">
+                <i class="bi bi-airplane-engines me-2"></i>
+                Panel de control
+            </a>
+        </li>
+        <li>
+            <a href="/admin/clientes" class="nav-link" th:classappend="${(url == 'clientestabla') ? 'active' : 'text-white'}">
+                <i class="bi bi-table me-2"></i>
+                Clientes
+            </a>
+        </li>
+        <li>
+            <a href="/admin/comentarios" class="nav-link" th:classappend="${(url == 'comentariostabla') ? 'active' : 'text-white'}">
+                <i class="bi bi-table me-2"></i>
+                Comentarios
+            </a>
+        </li>
+        <li>
+            <a href="/admin/posts" class="nav-link" th:classappend="${(url == 'poststabla') ? 'active' : 'text-white'}">
+                <i class="bi bi-table me-2"></i>
+                Posts
+            </a>
+        </li>
+        <li>
+            <a href="/admin/secciones" class="nav-link" th:classappend="${(url == 'seccionestabla') ? 'active' : 'text-white'}">
+                <i class="bi bi-table me-2"></i>
+                Secciones
+            </a>
+        </li>
+        <li>
+            <a href="/admin/tipos" class="nav-link" th:classappend="${(url == 'tipostabla') ? 'active' : 'text-white'}">
+                <i class="bi bi-table me-2"></i>
+                Tipos
+            </a>
+        </li>
+    </ul>
+    <hr>
+    <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+            <img th:src="(${usuario.avatar} == 'null') ? '/images/iconoUsuario.jpg' : ${usuario.avatar}" alt="mdo" width="45" height="45" class="rounded-circle">
+            <div th:text="${usuario.nick}" class="ms-2"></div>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+            <li><a class="dropdown-item" href="/ajustes">Ajustes</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+                <form th:action="@{/logout}" method="post">
+                    <input class="dropdown-item" type="submit" value="Cerrar sesión" />
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
