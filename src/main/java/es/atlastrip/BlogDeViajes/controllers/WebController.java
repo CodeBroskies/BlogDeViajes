@@ -7,7 +7,6 @@ import es.atlastrip.BlogDeViajes.models.Seccion;
 import es.atlastrip.BlogDeViajes.services.ClienteService;
 import es.atlastrip.BlogDeViajes.services.ComentarioService;
 import es.atlastrip.BlogDeViajes.services.PostService;
-import es.atlastrip.BlogDeViajes.services.SeccionService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -120,8 +119,51 @@ public class WebController {
     }
 
     @GetMapping("/admin/dashboard")
-    public String dashboard() {
+    public String dashboard(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
+        model.addAttribute("url", "dashboard");
+
+        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
         return "/admin/dashboard";
+    }
+
+    @GetMapping("/admin/clientes")
+    public String tablaClientes(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
+        model.addAttribute("url", "clientestabla");
+
+        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        return "/admin/clientestabla";
+    }
+
+    @GetMapping("/admin/comentarios")
+    public String tablaComentarios(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
+        model.addAttribute("url", "comentariostabla");
+
+        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        return "/admin/comentariostabla";
+    }
+
+    @GetMapping("/admin/posts")
+    public String tablaPosts(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
+        model.addAttribute("url", "poststabla");
+
+        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        return "/admin/poststabla";
+    }
+
+    @GetMapping("/admin/secciones")
+    public String tablaSecciones(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
+        model.addAttribute("url", "seccionestabla");
+
+        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        return "/admin/seccionestabla";
+    }
+
+    @GetMapping("/admin/tipos")
+    public String tablaTipos(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
+        model.addAttribute("url", "tipostabla");
+
+        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        return "/admin/tipostabla";
     }
 
 }

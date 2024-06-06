@@ -10,7 +10,7 @@
                 <li><a href="/posts" class="nav-link px-2 link-dark">Blog</a></li>
             </ul>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" th:action="@{./post}" method="get">
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" th:action="@{./posts}" method="get">
                 <input type="search" class="form-control" id="busqueda" name="busqueda" placeholder="Buscar" th:value="${busqueda}" required>
             </form>
 
@@ -22,6 +22,7 @@
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                     <li><a class="dropdown-item" href="/login" sec:authorize="!isAuthenticated()">Iniciar sesión</a></li>
                     <li><a class="dropdown-item" href="/ajustes" sec:authorize="isAuthenticated()">Ajustes</a></li>
+                    <li><a class="dropdown-item" href="/admin/dashboard" sec:authorize="hasRole('ROLE_ADMIN')">Admin</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
