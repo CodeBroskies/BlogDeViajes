@@ -47,6 +47,30 @@ public class ClienteService implements UserDetailsService {
             return clientes;
         }
 
+        public ArrayList<Cliente> listarClientes(int pagina) throws SQLException {
+            ArrayList<Cliente> clientes = new ArrayList<>();
+            int offset = (pagina - 1) * 5;
+            int limit = 5;
+            String sql = "SELECT * FROM cliente LIMIT " + limit + " OFFSET " + offset + ";";
+            Statement consulta = MYSQL.connect().createStatement();
+            ResultSet resultSet = consulta.executeQuery(sql);
+            while (resultSet.next()) {
+                Cliente cliente = new Cliente(
+                        resultSet.getInt("id"),
+                        resultSet.getString("nick"),
+                        resultSet.getString("password"),
+                        resultSet.getString("avatar"),
+                        resultSet.getString("nombre"),
+                        resultSet.getString("apellido1"),
+                        resultSet.getString("apellido2"),
+                        resultSet.getString("email"),
+                        resultSet.getString("telefono")
+                );
+                clientes.add(cliente);
+            }
+            return clientes;
+        }
+
         public void crearCliente(Cliente cliente) throws SQLException {
             Statement consulta = MYSQL.connect().createStatement();
 
@@ -152,4 +176,61 @@ public class ClienteService implements UserDetailsService {
             }
             return null;
         }
+
+        public ArrayList<Cliente> ordenarClientes(int pagina, String columna, String orden) throws SQLException {
+            ArrayList<Cliente> usuarios = new ArrayList<>();
+            int offset = (pagina - 1) * 5;
+            int limit = 5;
+            String sql = "SELECT * FROM cliente ORDER BY " + columna + " " + orden + " LIMIT " + limit + " OFFSET " + offset;
+            Statement consulta = MYSQL.connect().createStatement();
+            ResultSet resultSet = consulta.executeQuery(sql);
+            while (resultSet.next()) {
+                Cliente cliente = new Cliente(
+                        resultSet.getInt("id"),
+                        resultSet.getString("nick"),
+                        resultSet.getString("password"),
+                        resultSet.getString("avatar"),
+                        resultSet.getString("nombre"),
+                        resultSet.getString("apellido1"),
+                        resultSet.getString("apellido2"),
+                        resultSet.getString("email"),
+                        resultSet.getString("telefono")
+                );
+                usuarios.add(cliente);
+            }
+            return usuarios;
+        }
+
+    public ArrayList<Cliente> filtrarUsuarios(String busqueda, String filtro) throws SQLException {
+        ArrayList<Cliente> usuarios = new ArrayList<>();
+        String sql = (filtro.equals("todo")) ? "SELECT * FROM cliente WHERE nombre LIKE " + "'%" + busqueda + "%' OR apellido1 LIKE " + "'%" + busqueda + "%' OR apellido2 LIKE" + "'%" + busqueda + "%' OR telefono LIKE " + "'%" + busqueda + "%' OR email LIKE " + "'%" + busqueda + "%'" : "SELECT * FROM cliente WHERE " + filtro + " LIKE " + "'%" + busqueda + "%'";
+        Statement consulta = MYSQL.connect().createStatement();
+        ResultSet resultSet = consulta.executeQuery(sql);
+        while (resultSet.next()) {
+            Cliente usuario = new Cliente(
+                    resultSet.getInt("id"),
+                    resultSet.getString("nick"),
+                    resultSet.getString("password"),
+                    resultSet.getString("avatar"),
+                    resultSet.getString("nombre"),
+                    resultSet.getString("apellido1"),
+                    resultSet.getString("apellido2"),
+                    resultSet.getString("email"),
+                    resultSet.getString("telefono")
+            );
+            usuarios.add(usuario);
+        }
+        return usuarios;
+    }
+
+    public int contarClientes() throws SQLException {
+        int count = 0;
+        String sql = "SELECT COUNT(*) AS count FROM cliente";
+        Statement consulta = MYSQL.connect().createStatement();
+        ResultSet resultSet = consulta.executeQuery(sql);
+        if (resultSet.next()) {
+            count = resultSet.getInt("count");
+        }
+        return count;
+    }
 }

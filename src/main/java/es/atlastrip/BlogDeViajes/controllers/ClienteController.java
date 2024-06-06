@@ -16,10 +16,7 @@ public class ClienteController {
 
     @GetMapping("/listar")
     public String listar(Model model) throws SQLException {
-        String busqueda = "";
         model.addAttribute("clientes", service.listarClientes());
-        model.addAttribute("cliente", new Cliente());
-        model.addAttribute("busqueda", busqueda);
         return "clientes";
     }
 
@@ -27,7 +24,7 @@ public class ClienteController {
     public String eliminar(@RequestParam("id") int id, Model model) throws SQLException {
         service.eliminarCliente(id);
         model.addAttribute("clientes", service.listarClientes());
-        return "redirect:/clientes/listar";
+        return "redirect:/admin/clientes";
     }
 
     @GetMapping("/modificar")
@@ -40,13 +37,13 @@ public class ClienteController {
     public String actualizar(@ModelAttribute Cliente cliente, Model model) throws SQLException {
         service.actualizarCliente(cliente);
         model.addAttribute("clientes", service.listarClientes());
-        return "redirect:/clientes/listar";
+        return "redirect:/admin/clientes";
     }
 
     @PostMapping("/agregar")
     public String agregar(@ModelAttribute Cliente cliente, Model model) throws SQLException {
         service.crearCliente(cliente);
         model.addAttribute("clientes", service.listarClientes());
-        return "redirect:/clientes/listar";
+        return "redirect:/admin/clientes";
     }
 }

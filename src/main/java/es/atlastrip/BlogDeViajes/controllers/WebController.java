@@ -22,18 +22,19 @@ import java.util.ArrayList;
 @Controller
 public class WebController {
 
-    PostService service = new PostService();
+    PostService postService = new PostService();
+    ClienteService clienteService = new ClienteService();
 
     @GetMapping("/")
     public String index(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
-        model.addAttribute("lastPosts", service.listarLastPostsVista());
+        model.addAttribute("lastPosts", postService.listarLastPostsVista());
 
         if (userDetails == null) {
             Cliente cliente = new Cliente();
             cliente.setAvatar("null");
             model.addAttribute("usuario", cliente);
         } else {
-            model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+            model.addAttribute("usuario", clienteService.obtenerCliente(userDetails.getUsername()));
         }
         return "index";
     }
@@ -42,9 +43,9 @@ public class WebController {
     public String posts(@AuthenticationPrincipal UserDetails userDetails, @RequestParam(value = "busqueda", required = false) String busqueda, Model model) throws SQLException {
         if (busqueda == null) {
             busqueda = "";
-            model.addAttribute("posts", service.listarPostsVista());
+            model.addAttribute("posts", postService.listarPostsVista());
         } else {
-            ArrayList<Post> posts = service.listarPostsVista(busqueda);
+            ArrayList<Post> posts = postService.listarPostsVista(busqueda);
             if (posts.isEmpty()) {
                 model.addAttribute("mensaje", "No se han encontrado publicaciones");
             } else {
@@ -58,7 +59,7 @@ public class WebController {
             cliente.setAvatar("null");
             model.addAttribute("usuario", cliente);
         } else {
-            model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+            model.addAttribute("usuario", clienteService.obtenerCliente(userDetails.getUsername()));
         }
         return "posts";
     }
@@ -78,7 +79,7 @@ public class WebController {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("post", nuevoPost);
 
-        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        model.addAttribute("usuario", clienteService.obtenerCliente(userDetails.getUsername()));
         return "createpost";
     }
 
@@ -94,76 +95,28 @@ public class WebController {
         comentario.setId_post(id_post);
 
         model.addAttribute("post", post);
-        model.addAttribute("creador", new ClienteService().obtenerCliente(post.getId_cliente()));
+        model.addAttribute("creador", clienteService.obtenerCliente(post.getId_cliente()));
         model.addAttribute("comentarios", new ComentarioService().listarComentariosPorPost(id_post));
         model.addAttribute("comentario", comentario);
 
-        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        model.addAttribute("usuario", clienteService.obtenerCliente(userDetails.getUsername()));
         return "post";
     }
 
     @GetMapping("/ajustes")
     public String settings(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
-        model.addAttribute("cliente", new ClienteService().obtenerCliente(userDetails.getUsername()));
-        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        model.addAttribute("cliente", clienteService.obtenerCliente(userDetails.getUsername()));
+        model.addAttribute("usuario", clienteService.obtenerCliente(userDetails.getUsername()));
         return "settings";
     }
 
     @PostMapping("/actualizarAjustes")
     public String actualizarAjustes(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute Cliente cliente, Model model) throws SQLException {
         System.out.println(cliente.getId());
-        new ClienteService().actualizarCliente(cliente);
-        model.addAttribute("cliente", new ClienteService().obtenerCliente(userDetails.getUsername()));
-        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
+        clienteService.actualizarCliente(cliente);
+        model.addAttribute("cliente", clienteService.obtenerCliente(userDetails.getUsername()));
+        model.addAttribute("usuario", clienteService.obtenerCliente(userDetails.getUsername()));
         return "settings";
-    }
-
-    @GetMapping("/admin/dashboard")
-    public String dashboard(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
-        model.addAttribute("url", "dashboard");
-
-        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
-        return "/admin/dashboard";
-    }
-
-    @GetMapping("/admin/clientes")
-    public String tablaClientes(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
-        model.addAttribute("url", "clientestabla");
-
-        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
-        return "/admin/clientestabla";
-    }
-
-    @GetMapping("/admin/comentarios")
-    public String tablaComentarios(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
-        model.addAttribute("url", "comentariostabla");
-
-        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
-        return "/admin/comentariostabla";
-    }
-
-    @GetMapping("/admin/posts")
-    public String tablaPosts(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
-        model.addAttribute("url", "poststabla");
-
-        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
-        return "/admin/poststabla";
-    }
-
-    @GetMapping("/admin/secciones")
-    public String tablaSecciones(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
-        model.addAttribute("url", "seccionestabla");
-
-        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
-        return "/admin/seccionestabla";
-    }
-
-    @GetMapping("/admin/tipos")
-    public String tablaTipos(@AuthenticationPrincipal UserDetails userDetails, Model model) throws SQLException {
-        model.addAttribute("url", "tipostabla");
-
-        model.addAttribute("usuario", new ClienteService().obtenerCliente(userDetails.getUsername()));
-        return "/admin/tipostabla";
     }
 
 }
