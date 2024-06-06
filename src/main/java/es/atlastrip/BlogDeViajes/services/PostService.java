@@ -164,4 +164,15 @@ public class PostService {
         return null;
     }
 
+    public int contarPosts() throws SQLException {
+        int count = 0;
+        String sql = "SELECT COUNT(*) AS count FROM post";
+        Statement consulta = MYSQL.connect().createStatement();
+        ResultSet resultSet = consulta.executeQuery(sql);
+        if (resultSet.next()) {
+            count = resultSet.getInt("count");
+        }
+        return count;
+    }
+
 }
