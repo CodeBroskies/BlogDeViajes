@@ -23,7 +23,7 @@ public class ClienteService implements UserDetailsService {
             return new BCryptPasswordEncoder();
         }
 
-        ConnectionMySql MYSQL = new ConnectionMySql();
+        ConnectionMySql MYSQL = ConnectionMySql.getInstance();
 
         public ArrayList<Cliente> listarClientes() throws SQLException {
             ArrayList<Cliente> clientes = new ArrayList<>();
@@ -69,7 +69,7 @@ public class ClienteService implements UserDetailsService {
 
         public void actualizarCliente(Cliente clienteSeleccionado) throws SQLException {
             Statement consulta = MYSQL.connect().createStatement();
-            String sql = "UPDATE cliente SET nombre = '" + clienteSeleccionado.getNombre() + "', apellido1 = '" + clienteSeleccionado.getApellido1()+ "', apellido2 = '" + clienteSeleccionado.getApellido2() + "', telefono = '" + clienteSeleccionado.getTelefono() + "', email = '" + clienteSeleccionado.getEmail() + "' WHERE id = " + clienteSeleccionado.getId();
+            String sql = "UPDATE cliente SET avatar = '" + clienteSeleccionado.getAvatar() + "', nombre = '" + clienteSeleccionado.getNombre() + "', apellido1 = '" + clienteSeleccionado.getApellido1()+ "', apellido2 = '" + clienteSeleccionado.getApellido2() + "', telefono = '" + clienteSeleccionado.getTelefono() + "', email = '" + clienteSeleccionado.getEmail() + "' WHERE id = " + clienteSeleccionado.getId();
 
             consulta.executeUpdate(sql);
             consulta.close();
@@ -77,6 +77,27 @@ public class ClienteService implements UserDetailsService {
 
         public Cliente obtenerCliente(int id) throws SQLException {
             String sql = "SELECT * FROM cliente WHERE id = " + id;
+            Statement consulta = MYSQL.connect().createStatement();
+            ResultSet resultSet = consulta.executeQuery(sql);
+            if (resultSet.next()) {
+                Cliente cliente = new Cliente(
+                        resultSet.getInt("id"),
+                        resultSet.getString("nick"),
+                        resultSet.getString("password"),
+                        resultSet.getString("avatar"),
+                        resultSet.getString("nombre"),
+                        resultSet.getString("apellido1"),
+                        resultSet.getString("apellido2"),
+                        resultSet.getString("email"),
+                        resultSet.getString("telefono")
+                );
+                return cliente;
+            }
+            return null;
+        }
+
+        public Cliente obtenerCliente(String nick) throws SQLException {
+            String sql = "SELECT * FROM cliente WHERE nick = '" + nick + "'";
             Statement consulta = MYSQL.connect().createStatement();
             ResultSet resultSet = consulta.executeQuery(sql);
             if (resultSet.next()) {
@@ -114,6 +135,16 @@ public class ClienteService implements UserDetailsService {
                             resultSet.getString("email"),
                             resultSet.getString("telefono")
                     );
+
+                    sql = "SELECT r.name FROM roles r INNER JOIN user_roles ur ON r.id = ur.role_id WHERE ur.user_id = " + cliente.getId();
+                    try (ResultSet rolesResultSet = consulta.executeQuery(sql)) {
+                        ArrayList<String> roles = new ArrayList<>();
+                        while (rolesResultSet.next()) {
+                            roles.add(rolesResultSet.getString("name"));
+                        }
+                        cliente.setRoles(roles);
+                    }
+
                     return cliente;
                 }
             } catch (Exception e) {

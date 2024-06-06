@@ -2,6 +2,8 @@ package es.atlastrip.BlogDeViajes.controllers;
 
 import es.atlastrip.BlogDeViajes.models.Comentario;
 import es.atlastrip.BlogDeViajes.services.ComentarioService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +30,7 @@ public class ComentarioController {
     public String eliminar(@RequestParam("id") int id, Model model) throws SQLException {
         service.eliminarComentario(id);
         model.addAttribute("comentarios", service.listarComentarios());
-        return "redirect:/comentarios/listar?pagina=1";
+        return "redirect:/comentarios/listar";
     }
 
     @GetMapping("/modificar")
@@ -37,18 +39,18 @@ public class ComentarioController {
         return "comentarioModificar";
     }
 
-    @PostMapping("/actualizar")
+    @PutMapping("/actualizar")
     public String actualizar(@ModelAttribute Comentario comentario, Model model) throws SQLException {
         service.actualizarComentario(comentario);
         model.addAttribute("comentarios", service.listarComentarios());
-        return "redirect:/comentarios/listar?pagina=1";
+        return "redirect:/comentarios/listar";
     }
 
     @PostMapping("/agregar")
-    public String agregar(@ModelAttribute Comentario comentario, Model model) throws SQLException {
-        service.crearComentario(comentario);
+    public String agregar(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute Comentario comentario, Model model) throws SQLException {
+        service.crearComentario(userDetails, comentario);
         model.addAttribute("comentarios", service.listarComentarios());
-        return "redirect:/comentarios/listar?pagina=1";
+        return "redirect:/verpost?id=" + comentario.getId_post();
     }
 
 }

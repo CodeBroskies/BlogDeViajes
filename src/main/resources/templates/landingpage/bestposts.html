@@ -2,49 +2,16 @@
     <div class="">
         <h2 class="text-center">Mejores posts</h2>
         <div class="d-flex flex-row gap-5">
-            <div class="col card my-3 p-0">
+            <div class="col card my-3 p-0" th:each="post : ${lastPosts}">
                 <h5 class="card-header d-flex align-items-center">
-                    <img src="iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">
+                    <img th:src="(${post.avatar} == 'null') ? '/images/iconoUsuario.jpg' : ${post.avatar}" alt="mdo" width="45" height="45" class="p-1 rounded-circle">
                     <div class="ms-2">
-                        <p class="username m-0">@MiMadreEsColombiana</p>
-                        <h5 class="m-0">Mis Aventuras en Australia</h5>
+                        <p class="username m-0" th:text="'@' + ${post.username}"></p>
+                        <h5 class="m-0" th:text="${post.titulo}"></h5>
                     </div>
                 </h5>
                 <div class="card-body">
-                    <p class="card-text">Juro que no podía creerlo, ¡tenían internet y hasta Starbucks! Australia, con su fama de ser el hogar de criaturas peligrosas y paisajes desérticos, me dejó boquiabierto. Desde las playas de arena blanca hasta las ciudades llenas de rascacielos, cada lugar era como una postal de postal.</p>
-                    <div class="d-flex justify-content-center">
-                        <a href="#" class="btn btn-dark align-self-center">Leer más</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col card my-3 p-0">
-                <h5 class="card-header d-flex align-items-center">
-                    <img src="iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">
-                    <div class="ms-2">
-                        <p class="username m-0">@NuttingMyPassion</p>
-                        <h5 class="m-0">Mi viaje a Nicaragua</h5>
-                    </div>
-                </h5>
-                <div class="card-body">
-                    <p class="card-text">Por más espectacular que parezca, tenían coches, y móviles, eso sí me
-                        sorprendió. Nicaragua, con su rica historia y paisajes asombrosos, no deja de sorprenderme.
-                        Desde las bulliciosas calles de Managua hasta la serenidad de Granada, cada rincón ofrece
-                        una nueva experiencia.</p>
-                    <div class="d-flex justify-content-center">
-                        <a href="#" class="btn btn-dark align-self-center">Leer más</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col card my-3 p-0">
-                <h5 class="card-header d-flex align-items-center">
-                    <img src="iconoUsuario-removebg-preview.png" alt="mdo" width="55" height="55" class="rounded-circle">
-                    <div class="ms-2">
-                        <p class="username m-0">@TuPapiMuñaño</p>
-                        <h5 class="m-0">Mis Andanzas en Alemania</h5>
-                    </div>
-                </h5>
-                <div class="card-body">
-                    <p class="card-text">¿Alemania? ¡Claro que sí! Tenían autos veloces y edificios modernos, ¡casi me caigo de espaldas! Alemania, con su fama de ser todo sobre la cerveza y las salchichas, me dejó con la boca abierta. Desde los castillos de cuento de hadas hasta las discotecas llenas de música electrónica, cada lugar era como una fiesta sin fin.</p>
+                    <p class="card-text" th:text="${post.descripcion}"></p>
                     <div class="d-flex justify-content-center">
                         <a href="#" class="btn btn-dark align-self-center">Leer más</a>
                     </div>
