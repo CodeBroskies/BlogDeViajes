@@ -1,0 +1,12 @@
+## Web de Blog de Viajes en Spring Boot
+Frontend con el motor de plantillas Thymeleaf con HTML y Bootstrap. <br>
+Backend realizado en Spring con Boot, Web y Security.
+
+## Video explicativo:
+https://drive.google.com/file/d/1kvpySM8Tm7rHgfzfesK_TYMqvZrIEA0f/view?usp=sharing
+
+# Participantes:
+[@Michillas](https://github.com/michillas) (Miguel Ángel Montilla Garcia) / Capitán <br>
+[@FernandoPerezGarcia](https://github.com/FernandoPerezGarcia) (Fernando Perez Garcia) / Miembro <br>
+[@Vitaliyhlv](https://github.com/Vitaliyhlv) (Vitaliy Holovchak) / Miembro <br>
+[@JUANRIOSG1](https://github.com/JUANRIOSG1) (Juan José Rios Gangas) / Miembro
