@@ -2,6 +2,9 @@
 Frontend con el motor de plantillas Thymeleaf con HTML y Bootstrap. <br>
 Backend realizado en Spring con Boot, Web y Security.
 
+## Tecnologías
+<img src="https://img.shields.io/badge/Thymeleaf-%23005C0F.svg?style=for-the-badge&logo=Thymeleaf&logoColor=white"></img> <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white"></img> <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white"></img>
+
 ## Video explicativo:
 https://drive.google.com/file/d/1kvpySM8Tm7rHgfzfesK_TYMqvZrIEA0f/view?usp=sharing
 
